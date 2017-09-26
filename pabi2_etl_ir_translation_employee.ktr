@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>pabi2_etl_ir_translation_org</name>
+    <name>pabi2_etl_ir_translation_employee</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -66,9 +66,9 @@
     <clusterschemas>
     </clusterschemas>
   <created_user>-</created_user>
-  <created_date>2017&#x2f;08&#x2f;16 19&#x3a;31&#x3a;16.386</created_date>
+  <created_date>2560&#x2f;09&#x2f;26 20&#x3a;58&#x3a;11.705</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2560&#x2f;09&#x2f;26 21&#x3a;19&#x3a;38.372</modified_date>
+  <modified_date>2560&#x2f;09&#x2f;26 21&#x3a;24&#x3a;35.348</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -124,15 +124,15 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>VW_CENTER tb</from><to>Lookup res_id</to><enabled>Y</enabled> </hop>
-  <hop> <from>Lookup res_id</from><to>Filter res_id,name</to><enabled>Y</enabled> </hop>
-  <hop> <from>VW_CENTER tb</from><to>Lookup res_id short</to><enabled>Y</enabled> </hop>
-  <hop> <from>Lookup res_id short</from><to>Filter res_id,short</to><enabled>Y</enabled> </hop>
-  <hop> <from>Filter res_id,name</from><to>I&#x2f;U ir_tran org</to><enabled>Y</enabled> </hop>
-  <hop> <from>Filter res_id,short</from><to>I&#x2f;U short ir_tran org</to><enabled>Y</enabled> </hop>
+  <hop> <from>Lookup res_id last_name</from><to>Filter res_id,last</to><enabled>Y</enabled> </hop>
+  <hop> <from>VW_EMPLOYEEALL tb</from><to>Lookup res_id last_name</to><enabled>Y</enabled> </hop>
+  <hop> <from>VW_EMPLOYEEALL tb</from><to>Lookup res_id name</to><enabled>Y</enabled> </hop>
+  <hop> <from>Lookup res_id name</from><to>Filter res_id,first</to><enabled>Y</enabled> </hop>
+  <hop> <from>Filter res_id,first</from><to>I&#x2f;U first ir_tran hr_employee</to><enabled>Y</enabled> </hop>
+  <hop> <from>Filter res_id,last</from><to>I&#x2f;U last ir_tran hr_employee</to><enabled>Y</enabled> </hop>
   </order>
   <step>
-    <name>Filter res_id,name</name>
+    <name>Filter res_id,first</name>
     <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -142,7 +142,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-<send_true_to>I&#x2f;U ir_tran org</send_true_to>
+<send_true_to>I&#x2f;U first ir_tran hr_employee</send_true_to>
 <send_false_to/>
     <compare>
 <condition>
@@ -157,14 +157,14 @@
   <condition>
    <negated>N</negated>
    <operator>AND</operator>
-   <leftvalue>ENGLISHNAME</leftvalue>
+   <leftvalue>GIVENNAMETHAI</leftvalue>
    <function>IS NOT NULL</function>
    <rightvalue/>
    </condition>
   <condition>
    <negated>N</negated>
    <operator>AND</operator>
-   <leftvalue>THAINAME</leftvalue>
+   <leftvalue>GIVENNAMEENGLISH</leftvalue>
    <function>IS NOT NULL</function>
    <rightvalue/>
    </condition>
@@ -180,7 +180,7 @@
     </step>
 
   <step>
-    <name>Filter res_id,short</name>
+    <name>Filter res_id,last</name>
     <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -190,7 +190,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-<send_true_to>I&#x2f;U short ir_tran org</send_true_to>
+<send_true_to>I&#x2f;U last ir_tran hr_employee</send_true_to>
 <send_false_to/>
     <compare>
 <condition>
@@ -205,14 +205,14 @@
   <condition>
    <negated>N</negated>
    <operator>AND</operator>
-   <leftvalue>ENGLISHSHORTNAME</leftvalue>
+   <leftvalue>FAMILYNAMETHAI</leftvalue>
    <function>IS NOT NULL</function>
    <rightvalue/>
    </condition>
   <condition>
    <negated>N</negated>
    <operator>AND</operator>
-   <leftvalue>THAISHORTNAME</leftvalue>
+   <leftvalue>FAMILYNAMEENGLISH</leftvalue>
    <function>IS NOT NULL</function>
    <rightvalue/>
    </condition>
@@ -228,7 +228,7 @@
     </step>
 
   <step>
-    <name>I&#x2f;U ir_tran org</name>
+    <name>I&#x2f;U first ir_tran hr_employee</name>
     <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
@@ -245,7 +245,7 @@
       <schema/>
       <table>ir_translation</table>
       <key>
-        <name>name</name>
+        <name>first_name</name>
         <field>name</field>
         <condition>&#x3d;</condition>
         <name2/>
@@ -258,12 +258,12 @@
       </key>
       <value>
         <name>src</name>
-        <rename>ENGLISHNAME</rename>
+        <rename>GIVENNAMEENGLISH</rename>
         <update>Y</update>
       </value>
       <value>
         <name>value</name>
-        <rename>THAINAME</rename>
+        <rename>GIVENNAMETHAI</rename>
         <update>Y</update>
       </value>
       <value>
@@ -293,7 +293,7 @@
       </value>
       <value>
         <name>name</name>
-        <rename>name</rename>
+        <rename>first_name</rename>
         <update>Y</update>
       </value>
     </lookup>
@@ -306,7 +306,7 @@
     </step>
 
   <step>
-    <name>I&#x2f;U short ir_tran org</name>
+    <name>I&#x2f;U last ir_tran hr_employee</name>
     <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
@@ -323,7 +323,7 @@
       <schema/>
       <table>ir_translation</table>
       <key>
-        <name>name_short</name>
+        <name>last_name</name>
         <field>name</field>
         <condition>&#x3d;</condition>
         <name2/>
@@ -336,12 +336,12 @@
       </key>
       <value>
         <name>src</name>
-        <rename>ENGLISHSHORTNAME</rename>
+        <rename>FAMILYNAMEENGLISH</rename>
         <update>Y</update>
       </value>
       <value>
         <name>value</name>
-        <rename>THAISHORTNAME</rename>
+        <rename>FAMILYNAMETHAI</rename>
         <update>Y</update>
       </value>
       <value>
@@ -371,7 +371,7 @@
       </value>
       <value>
         <name>name</name>
-        <rename>name_short</rename>
+        <rename>last_name</rename>
         <update>Y</update>
       </value>
     </lookup>
@@ -384,7 +384,7 @@
     </step>
 
   <step>
-    <name>Lookup res_id</name>
+    <name>Lookup res_id last_name</name>
     <type>DBLookup</type>
     <description/>
     <distribute>N</distribute>
@@ -400,13 +400,55 @@
     <cache_size>0</cache_size>
     <lookup>
       <schema/>
-      <table>res_org</table>
+      <table>hr_employee</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
       <key>
-        <name>ENGLISHNAME</name>
-        <field>name</field>
+        <name>FAMILYNAMEENGLISH</name>
+        <field>last_name</field>
+        <condition>&#x3d;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>id</name>
+        <rename>res_id</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>144</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Lookup res_id name</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>pabi2</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>hr_employee</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>GIVENNAMEENGLISH</name>
+        <field>first_name</field>
         <condition>&#x3d;</condition>
         <name2/>
       </key>
@@ -426,49 +468,7 @@
     </step>
 
   <step>
-    <name>Lookup res_id short</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>pabi2</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>res_org</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>ENGLISHSHORTNAME</name>
-        <field>name_short</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>id</name>
-        <rename>res_id</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>144</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>VW_CENTER tb</name>
+    <name>VW_EMPLOYEEALL tb</name>
     <type>TableInput</type>
     <description/>
     <distribute>N</distribute>
@@ -479,8 +479,8 @@
            <schema_name/>
            </partitioning>
     <connection>ehr</connection>
-    <sql>SELECT&#xd;&#xa;CENTERID,&#xd;&#xa;THAINAME,&#xd;&#xa;ENGLISHNAME,&#xd;&#xa;THAISHORTNAME,&#xd;&#xa;ENGLISHSHORTNAME,&#xd;&#xa;&#x27;res.org,name&#x27; as name,&#xd;&#xa;&#x27;res.org,name_short&#x27; as name_short,&#xd;&#xa;&#x27;th_TH&#x27; as lang,&#xd;&#xa;&#x27;translated&#x27; as state,&#xd;&#xa;&#x27;model&#x27; as type,&#xd;&#xa;&#x27;&#x27;&#x27;&#x27;&#x27;&#x27; as comments&#xd;&#xa;FROM VW_CENTER&#xd;&#xa;order by CENTERID ASC</sql>
-    <limit>0</limit>
+    <sql>SELECT&#xd;&#xa;GIVENNAMETHAI&#xd;&#xa;, FAMILYNAMETHAI&#xd;&#xa;, GIVENNAMEENGLISH&#xd;&#xa;, FAMILYNAMEENGLISH,&#xd;&#xa;&#x27;hr_employee,first_name&#x27; as first_name,&#xd;&#xa;&#x27;hr_employee,last_name&#x27; as last_name,&#xd;&#xa;&#x27;th_TH&#x27; as lang,&#xd;&#xa;&#x27;translated&#x27; as state,&#xd;&#xa;&#x27;model&#x27; as type,&#xd;&#xa;&#x27;&#x27;&#x27;&#x27;&#x27;&#x27; as comments&#xd;&#xa;FROM VW_EMPLOYEEALL&#xd;&#xa;</sql>
+    <limit>10000</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
     <variables_active>N</variables_active>
@@ -494,18 +494,6 @@
     </step>
 
   <step_error_handling>
-      <error>
-        <source_step>I&#x2f;U short ir_tran org</source_step>
-        <target_step>VW_CENTER tb</target_step>
-        <is_enabled>N</is_enabled>
-        <nr_valuename/>
-        <descriptions_valuename/>
-        <fields_valuename/>
-        <codes_valuename/>
-        <max_errors/>
-        <max_pct_errors/>
-        <min_pct_rows/>
-      </error>
   </step_error_handling>
    <slave-step-copy-partition-distribution>
 </slave-step-copy-partition-distribution>
