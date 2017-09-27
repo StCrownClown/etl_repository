@@ -68,7 +68,7 @@
   <created_user>-</created_user>
   <created_date>2559&#x2f;06&#x2f;23 10&#x3a;36&#x3a;16.072</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2017&#x2f;09&#x2f;18 13&#x3a;25&#x3a;29.783</modified_date>
+  <modified_date>2560&#x2f;09&#x2f;27 16&#x3a;30&#x3a;11.621</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -99,14 +99,339 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>nstda_bst_dbill</from><to>Map field2SAP</to><enabled>Y</enabled> </hop>
-  <hop> <from>Map field2SAP</from><to>Excel Output Except</to><enabled>N</enabled> </hop>
-  <hop> <from>Map field2SAP</from><to>Text file output</to><enabled>Y</enabled> </hop>
-  <hop> <from>Set field value to a constant</from><to>Update successdate</to><enabled>N</enabled> </hop>
-  <hop> <from>Map field2SAP</from><to>Set field value to a constant</to><enabled>Y</enabled> </hop>
+  <hop> <from>Map field</from><to>Output except</to><enabled>Y</enabled> </hop>
+  <hop> <from>Map field</from><to>Output ZKBMM001_</to><enabled>Y</enabled> </hop>
+  <hop> <from>Set is_success_sap</from><to>U is_success_sap</to><enabled>N</enabled> </hop>
+  <hop> <from>Map field</from><to>Set is_success_sap</to><enabled>N</enabled> </hop>
+  <hop> <from>TB nstda_bst_dbill</from><to>Case no</to><enabled>Y</enabled> </hop>
+  <hop> <from>Case no</from><to>Clone 001</to><enabled>Y</enabled> </hop>
+  <hop> <from>Set 000</from><to>Remove clone</to><enabled>Y</enabled> </hop>
+  <hop> <from>Remove clone</from><to>Sort rows</to><enabled>Y</enabled> </hop>
+  <hop> <from>Case no</from><to>Sort rows</to><enabled>Y</enabled> </hop>
+  <hop> <from>Unique no,tbill_ids</from><to>Set 000</to><enabled>Y</enabled> </hop>
+  <hop> <from>Clone 001</from><to>Case clone</to><enabled>Y</enabled> </hop>
+  <hop> <from>Case clone</from><to>Unique no,tbill_ids</to><enabled>Y</enabled> </hop>
+  <hop> <from>Case clone</from><to>Remove clone</to><enabled>Y</enabled> </hop>
+  <hop> <from>Sort rows</from><to>Map field</to><enabled>Y</enabled> </hop>
   </order>
   <step>
-    <name>Excel Output Except</name>
+    <name>Case clone</name>
+    <type>SwitchCase</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<fieldname>clone</fieldname>
+<use_contains>N</use_contains>
+<case_value_type>Boolean</case_value_type>
+<case_value_format/>
+<case_value_decimal/>
+<case_value_group/>
+<default_target_step>Remove clone</default_target_step>
+<cases><case><value>Y</value>
+<target_step>Unique no,tbill_ids</target_step>
+</case></cases>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>256</xloc>
+      <yloc>112</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Case no</name>
+    <type>SwitchCase</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<fieldname>no</fieldname>
+<use_contains>N</use_contains>
+<case_value_type>String</case_value_type>
+<case_value_format/>
+<case_value_decimal/>
+<case_value_group/>
+<default_target_step>Sort rows</default_target_step>
+<cases><case><value>001</value>
+<target_step>Clone 001</target_step>
+</case></cases>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>144</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Clone 001</name>
+    <type>CloneRow</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <nrclones>1</nrclones>
+    <addcloneflag>Y</addcloneflag>
+    <cloneflagfield>clone</cloneflagfield>
+    <nrcloneinfield>N</nrcloneinfield>
+    <nrclonefield>tbill_ids</nrclonefield>
+    <addclonenum>N</addclonenum>
+    <clonenumfield>clone</clonenumfield>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>144</xloc>
+      <yloc>112</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Map field</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>        <select_unspecified>N</select_unspecified>
+      <meta>        <name>no</name>
+        <rename>no</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>      <meta>        <name>matno</name>
+        <rename>matno</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>      <meta>        <name>matdesc</name>
+        <rename>matdesc</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>      <meta>        <name>qty</name>
+        <rename>qty</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>      <meta>        <name>emp_id</name>
+        <rename>emp_id</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>      <meta>        <name>bookstore</name>
+        <rename>bookstore</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>480</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Output ZKBMM001_</name>
+    <type>TextFileOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <separator>	</separator>
+    <enclosure/>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>N</header>
+    <footer>N</footer>
+    <format>DOS</format>
+    <compression>None</compression>
+    <encoding>UTF-8</encoding>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>D&#x3a;&#x5c;data-integration&#x5c;ZKBMM001_</name>
+      <is_command>N</is_command>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>txt</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>Y</SpecifyFormat>
+      <date_time_format>yyyyMMdd</date_time_format>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>no</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>matno</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>matdesc</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>qty</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>emp_id</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>bookstore</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>592</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Output except</name>
     <type>ExcelOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -147,17 +472,7 @@
     </template>
     <fields>
       <field>
-        <name>docno</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>saleorg</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>distribution</name>
+        <name>no</name>
         <type>String</type>
         <format/>
       </field>
@@ -172,23 +487,38 @@
         <format/>
       </field>
       <field>
-        <name>barno</name>
+        <name>qty</name>
         <type>String</type>
         <format/>
       </field>
       <field>
-        <name>taxcode</name>
+        <name>emp_id</name>
         <type>String</type>
         <format/>
       </field>
       <field>
-        <name>unit</name>
+        <name>bookstore</name>
         <type>String</type>
         <format/>
       </field>
       <field>
-        <name>unitprice</name>
-        <type>Number</type>
+        <name>seq</name>
+        <type>String</type>
+        <format/>
+      </field>
+      <field>
+        <name>book_date</name>
+        <type>String</type>
+        <format/>
+      </field>
+      <field>
+        <name>post_date</name>
+        <type>String</type>
+        <format/>
+      </field>
+      <field>
+        <name>docno</name>
+        <type>String</type>
         <format/>
       </field>
       <field>
@@ -202,82 +532,7 @@
         <format/>
       </field>
       <field>
-        <name>qty</name>
-        <type>Integer</type>
-        <format/>
-      </field>
-      <field>
-        <name>pacode</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>sap_doc</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>fisical_year</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>createby</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>createon</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>updateby</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>updateon</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>msg_code</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>msg_desc</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>msg_alt_desc</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>sync_createdon</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>sync_createdby</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>sync_updatedon</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>sync_updatedby</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>issync</name>
+        <name>tbill_ids</name>
         <type>String</type>
         <format/>
       </field>
@@ -301,17 +556,17 @@
       </custom>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>352</xloc>
-      <yloc>32</yloc>
+      <xloc>592</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Map field2SAP</name>
+    <name>Remove clone</name>
     <type>SelectValues</type>
     <description/>
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <custom_distribution/>
     <copies>1</copies>
          <partitioning>
@@ -319,451 +574,62 @@
            <schema_name/>
            </partitioning>
     <fields>        <select_unspecified>N</select_unspecified>
-      <meta>        <name>docno</name>
-        <rename>XBLNR</rename>
-        <type>None</type>
-        <length>16</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>saleorg</name>
-        <rename>VKORG</rename>
-        <type>String</type>
-        <length>4</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>distribution</name>
-        <rename>VTWEG</rename>
-        <type>String</type>
-        <length>2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>matno</name>
-        <rename>MATNR</rename>
-        <type>String</type>
-        <length>18</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>matdesc</name>
-        <rename>TEXT40</rename>
-        <type>String</type>
-        <length>40</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>barno</name>
-        <rename>BARE_NO</rename>
-        <type>String</type>
-        <length>35</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>taxcode</name>
-        <rename>TAXKM</rename>
-        <type>String</type>
-        <length>1</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>unit</name>
-        <rename>MEINS</rename>
-        <type>String</type>
-        <length>3</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>unitprice</name>
-        <rename>WERTV6</rename>
-        <type>Number</type>
-        <length>13</length>
-        <precision>-2</precision>
-        <conversion_mask>0.00</conversion_mask>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>plant</name>
-        <rename>WERKS</rename>
-        <type>String</type>
-        <length>4</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>storage</name>
-        <rename>LGORT</rename>
-        <type>String</type>
-        <length>4</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>qty</name>
-        <rename>MENG13V</rename>
-        <type>Integer</type>
-        <length>13</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>pacode</name>
-        <rename>CHAR22</rename>
-        <type>String</type>
-        <length>22</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>sap_doc</name>
-        <rename>MBLNR</rename>
-        <type>String</type>
-        <length>10</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>fisical_year</name>
-        <rename>GJAHR</rename>
-        <type>String</type>
-        <length>4</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>createby</name>
-        <rename>CREATEBY</rename>
-        <type>String</type>
-        <length>30</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>createon</name>
-        <rename>CREATEON</rename>
-        <type>String</type>
-        <length>30</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>updateby</name>
-        <rename>UPDATEBY</rename>
-        <type>String</type>
-        <length>30</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>updateon</name>
-        <rename>UPDATEON</rename>
-        <type>String</type>
-        <length>30</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>msg_code</name>
-        <rename>MSG_CODE</rename>
-        <type>String</type>
-        <length>100</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>msg_desc</name>
-        <rename>MSG_DESC</rename>
-        <type>String</type>
-        <length>255</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>msg_alt_desc</name>
-        <rename>MSG_ALT_DESC</rename>
-        <type>String</type>
-        <length>255</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>sync_createdon</name>
-        <rename>SYNC_CREATEDON</rename>
-        <type>String</type>
-        <length>20</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>sync_createdby</name>
-        <rename>SYNC_CREATEDBY</rename>
-        <type>String</type>
-        <length>10</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>sync_updatedon</name>
-        <rename>SYNC_UPDATEDON</rename>
-        <type>String</type>
-        <length>20</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>sync_updatedby</name>
-        <rename>SYNC_UPDATEDBY</rename>
-        <type>String</type>
-        <length>100</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>issync</name>
-        <rename>SYNC_ISSYNC</rename>
-        <type>String</type>
-        <length>1</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>hid</name>
-        <rename>hid</rename>
-        <type>Integer</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>sid</name>
-        <rename>sid</rename>
-        <type>Integer</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>    </fields>     <cluster_schema/>
+      <remove>        <name>clone</name>
+      </remove>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>240</xloc>
-      <yloc>32</yloc>
+      <xloc>368</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Set field value to a constant</name>
+    <name>Set 000</name>
+    <type>SetValueField</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>no</name>
+        <replaceby>seq</replaceby>
+        </field>
+      <field>
+        <name>matno</name>
+        <replaceby>book_date</replaceby>
+        </field>
+      <field>
+        <name>matdesc</name>
+        <replaceby>post_date</replaceby>
+        </field>
+      <field>
+        <name>qty</name>
+        <replaceby>docno</replaceby>
+        </field>
+      <field>
+        <name>emp_id</name>
+        <replaceby>plant</replaceby>
+        </field>
+      <field>
+        <name>bookstore</name>
+        <replaceby>storage</replaceby>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>368</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Set is_success_sap</name>
     <type>SetValueConstant</type>
     <description/>
     <distribute>Y</distribute>
@@ -784,15 +650,15 @@
       </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>240</xloc>
-      <yloc>128</yloc>
+      <xloc>480</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Text file output</name>
-    <type>TextFileOutput</type>
+    <name>Sort rows</name>
+    <type>SortRows</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -801,373 +667,63 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <separator>	</separator>
-    <enclosure/>
-    <enclosure_forced>N</enclosure_forced>
-    <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>N</header>
-    <footer>N</footer>
-    <format>DOS</format>
-    <compression>None</compression>
-    <encoding>x-windows-874</encoding>
-    <endedLine/>
-    <fileNameInField>N</fileNameInField>
-    <fileNameField/>
-    <create_parent_folder>Y</create_parent_folder>
-    <file>
-      <name>D&#x3a;&#x5c;etl_repository&#x5c;ZKBMM001_</name>
-      <is_command>N</is_command>
-      <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>N</do_not_open_new_file_init>
-      <extention/>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>Y</SpecifyFormat>
-      <date_time_format>yyyyMMdd</date_time_format>
-      <add_to_result_filenames>Y</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery>0</splitevery>
-    </file>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>out</prefix>
+      <sort_size>1000000</sort_size>
+      <free_memory/>
+      <compress>N</compress>
+      <compress_variable/>
+      <unique_rows>N</unique_rows>
     <fields>
       <field>
-        <name>XBLNR</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
+        <name>tbill_ids</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <presorted>N</presorted>
       </field>
       <field>
-        <name>VKORG</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>VTWEG</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>MATNR</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>TEXT40</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>BARE_NO</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>TAXKM</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>MEINS</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>WERTV6</name>
-        <type>Number</type>
-        <format>0.00</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>WERKS</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>LGORT</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>MENG13V</name>
-        <type>Integer</type>
-        <format>&#x23;&#x3b;-&#x23;</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CHAR22</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>MBLNR</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>GJAHR</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CREATEBY</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CREATEON</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>UPDATEBY</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>UPDATEON</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>MSG_CODE</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>MSG_DESC</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>MSG_ALT_DESC</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>SYNC_CREATEDON</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>SYNC_CREATEDBY</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>SYNC_UPDATEDON</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>SYNC_UPDATEDBY</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>SYNC_ISSYNC</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
+        <name>no</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <presorted>N</presorted>
       </field>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>352</xloc>
-      <yloc>128</yloc>
+      <xloc>368</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Update successdate</name>
+    <name>TB nstda_bst_dbill</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>odoo</connection>
+    <sql>SELECT&#xd;&#xa;lpad&#x28;&#x28;row_number&#x28;&#x29; OVER &#x28;PARTITION BY nstda_bst_dbill.tbill_ids ORDER BY nstda_bst_dbill.id&#x29;&#x29;&#x3a;&#x3a;varchar,3,&#x27;0&#x27;&#x29; as no,&#xd;&#xa;nstda_bst_stock.matno&#x3a;&#x3a;varchar as matno,&#xd;&#xa;nstda_bst_stock.matdesc&#x3a;&#x3a;varchar as matdesc,&#xd;&#xa;nstda_bst_stock.qty&#x3a;&#x3a;varchar as qty,&#xd;&#xa;nstdamas_employee.emp_id&#x3a;&#x3a;varchar as emp_id,&#xd;&#xa;&#x27;103015&#x27; as bookstore,&#xd;&#xa;&#x27;000&#x27; as seq,&#xd;&#xa;to_char&#x28;nstda_bst_hbill.book_date,&#x27;DD.MM.YYYY&#x27;&#x29; as book_date,&#xd;&#xa;to_char&#x28;nstda_bst_hbill.post_date,&#x27;DD.MM.YYYY&#x27;&#x29; as post_date,&#xd;&#xa;nstda_bst_hbill.docno&#x3a;&#x3a;varchar as docno,&#xd;&#xa;plant&#x3a;&#x3a;varchar,&#xd;&#xa;&#x27;1011&#x27; as storage,&#xd;&#xa;nstda_bst_dbill.tbill_ids&#x3a;&#x3a;varchar&#xd;&#xa;FROM nstda_bst_hbill&#xd;&#xa;left outer join nstda_bst_dbill&#xd;&#xa;ON nstda_bst_hbill.id &#x3d; nstda_bst_dbill.tbill_ids&#xd;&#xa;left outer join nstda_bst_stock&#xd;&#xa;ON nstda_bst_dbill.matno &#x3d; nstda_bst_stock.id&#xd;&#xa;left outer join nstdamas_employee&#xd;&#xa;ON nstda_bst_hbill.empid &#x3d; nstdamas_employee.id&#xd;&#xa;left outer join nstdamas_costcenter&#xd;&#xa;ON nstda_bst_hbill.costct &#x3d; nstdamas_costcenter.id&#xd;&#xa;WHERE nstda_bst_hbill.status &#x3d; &#x27;success&#x27;&#xd;&#xa;ORDER BY nstda_bst_dbill.tbill_ids asc</sql>
+    <limit>1000</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>32</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>U is_success_sap</name>
     <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
@@ -1184,14 +740,14 @@
       <schema/>
       <table>nstda_bst_dbill</table>
       <key>
-        <name>hid</name>
+        <name>tbill_ids</name>
         <field>tbill_ids</field>
         <condition>&#x3d;</condition>
         <name2/>
       </key>
       <key>
-        <name>sid</name>
-        <field>matno</field>
+        <name>matdesc</name>
+        <field>matdesc</field>
         <condition>&#x3d;</condition>
         <name2/>
       </key>
@@ -1203,42 +759,43 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>240</xloc>
-      <yloc>224</yloc>
+      <xloc>480</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>nstda_bst_dbill</name>
-    <type>TableInput</type>
+    <name>Unique no,tbill_ids</name>
+    <type>Unique</type>
     <description/>
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>odoo</connection>
-    <sql>SELECT&#xd;&#xa;nstda_bst_hbill.docno as Docno,&#xd;&#xa;&#x27;NS01&#x27; as saleorg,&#xd;&#xa;&#x27;10&#x27; as distribution,&#xd;&#xa;nstda_bst_stock.matno as matno,&#xd;&#xa;nstda_bst_stock.matdesc as matdesc,&#xd;&#xa;nstda_bst_stock.barno as barno,&#xd;&#xa;nstda_bst_stock.taxcode as taxcode,&#xd;&#xa;nstda_bst_stock.unit as unit,&#xd;&#xa;nstda_bst_stock.unitprice as unitprice,&#xd;&#xa;&#x27;1000&#x27; as plant,&#xd;&#xa;&#x27;1003&#x27; as storage,&#xd;&#xa;nstda_bst_stock.qty as qty,&#xd;&#xa;&#x27;&#x27; as pacode,&#xd;&#xa;&#x27;&#x27; as SAP_DOC,&#xd;&#xa;nstda_bst_hbill.fyear as FISICAL_YEAR,&#xd;&#xa;nstdamas_employee.emp_id as CREATEBY,&#xd;&#xa;TO_CHAR&#x28;nstda_bst_hbill.create_date, &#x27;YYYYMMDD HH24&#x3a;MI&#x3a;SS&#x27;&#x29; as CREATEON,&#xd;&#xa;&#x27;&#x27; as UPDATEBY,&#xd;&#xa;&#x27;&#x27; as UPDATEON,&#xd;&#xa;&#x27;&#x27; as MSG_CODE,&#xd;&#xa;&#x27;&#x27; as MSG_DESC,&#xd;&#xa;&#x27;&#x27; as MSG_ALT_DESC,&#xd;&#xa;TO_CHAR&#x28;NOW&#x28;&#x29;, &#x27;YYYYMMDD HH24&#x3a;MI&#x3a;SS&#x27;&#x29; as SYNC_CREATEDON,&#xd;&#xa;&#x27;odoo_etl&#x27; as SYNC_CREATEDBY,&#xd;&#xa;&#x27;&#x27; as SYNC_UPDATEDON,&#xd;&#xa;&#x27;&#x27; as SYNC_UPDATEDBY,&#xd;&#xa;&#x27;&#x27; as ISSYNC,&#xd;&#xa;nstda_bst_costct&#xd;&#xa;nstda_bst_dbill.is_success_sap as is_success_sap,&#xd;&#xa;nstda_bst_hbill.id as hid,&#xd;&#xa;nstda_bst_stock.id as sid&#xd;&#xa;FROM nstda_bst_hbill&#xd;&#xa;left outer join nstda_bst_dbill&#xd;&#xa;ON nstda_bst_hbill.id &#x3d; nstda_bst_dbill.tbill_ids&#xd;&#xa;left outer join nstda_bst_stock&#xd;&#xa;ON nstda_bst_dbill.matno &#x3d; nstda_bst_stock.id&#xd;&#xa;left outer join nstdamas_employee&#xd;&#xa;ON nstda_bst_hbill.empid &#x3d; nstdamas_employee.id&#xd;&#xa;where nstda_bst_hbill.status &#x3d; &#x27;success&#x27;&#xd;&#xa;order by docno asc</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
+      <count_rows>N</count_rows>
+      <count_field>test1</count_field>
+      <reject_duplicate_row>Y</reject_duplicate_row>
+      <error_description>test2</error_description>
+    <fields>      <field>        <name>no</name>
+        <case_insensitive>N</case_insensitive>
+        </field>      <field>        <name>tbill_ids</name>
+        <case_insensitive>N</case_insensitive>
+        </field>      </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>32</xloc>
-      <yloc>32</yloc>
+      <xloc>256</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step_error_handling>
       <error>
-        <source_step>Map field2SAP</source_step>
-        <target_step>Excel Output Except</target_step>
+        <source_step>Map field</source_step>
+        <target_step>Output except</target_step>
         <is_enabled>Y</is_enabled>
         <nr_valuename/>
         <descriptions_valuename/>
