@@ -68,7 +68,7 @@
   <created_user>-</created_user>
   <created_date>2559&#x2f;06&#x2f;23 10&#x3a;36&#x3a;16.072</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2560&#x2f;09&#x2f;28 11&#x3a;41&#x3a;35.965</modified_date>
+  <modified_date>2560&#x2f;09&#x2f;29 13&#x3a;11&#x3a;26.899</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -111,7 +111,7 @@
   <hop> <from>nstda_bst</from><to>Clone row</to><enabled>Y</enabled> </hop>
   <hop> <from>Map field2SAP</from><to>Set field value to a constant</to><enabled>Y</enabled> </hop>
   <hop> <from>Set field value to a constant</from><to>Update successdate</to><enabled>Y</enabled> </hop>
-  <hop> <from>Map field2SAP</from><to>Text file output</to><enabled>Y</enabled> </hop>
+  <hop> <from>Map field2SAP</from><to>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Clone row</name>
@@ -318,15 +318,15 @@
     <append>N</append>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <file>
-      <name>icod2sap_error_except</name>
+      <name>D&#x3a;&#x5c;data-integration&#x5c;EHI_error</name>
       <extention>xls</extention>
       <do_not_open_newfile_init>N</do_not_open_newfile_init>
       <create_parent_folder>N</create_parent_folder>
       <split>N</split>
       <add_date>N</add_date>
       <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format/>
+      <SpecifyFormat>Y</SpecifyFormat>
+      <date_time_format>yyyyMMdd</date_time_format>
       <sheetname>Sheet1</sheetname>
       <autosizecolums>N</autosizecolums>
       <nullisblank>N</nullisblank>
@@ -1259,7 +1259,7 @@
     </step>
 
   <step>
-    <name>Text file output</name>
+    <name>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;</name>
     <type>TextFileOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1880,7 +1880,7 @@
            <schema_name/>
            </partitioning>
     <connection>odoo</connection>
-    <sql>SELECT&#xd;&#xa;&#x27;NS01&#x27; as Company,&#xd;&#xa;&#x27;JI&#x27; as DocType,&#xd;&#xa;TO_CHAR&#x28;nstda_bst_hbill.post_date, &#x27;YYYYMMDD&#x27;&#x29; as DocDate,&#xd;&#xa;TO_CHAR&#x28;NOW&#x28;&#x29;, &#x27;YYYYMMDD&#x27;&#x29; as PostDate,&#xd;&#xa;&#x27;THB&#x27; as Currency,&#xd;&#xa;&#x27;&#x27; as Branch,&#xd;&#xa;nstda_bst_hbill.docno as Docno,&#xd;&#xa;nstda_bst_hbill.objdesc as Objdesc,&#xd;&#xa;40 as PostKey,&#xd;&#xa;&#x27;&#x27; as SpecialGL,&#xd;&#xa;&#x27;&#x27; as BankType,&#xd;&#xa;&#x27;&#x27; as TaxCode,&#xd;&#xa;&#x27;&#x27; as BaseTaxAmount,&#xd;&#xa;&#x27;&#x27; as BaseLineDate,&#xd;&#xa;nstda_bst_hbill.docno as ZUONR,&#xd;&#xa;&#x27;&#x27; as RefLine1, &#x27;&#x27; as RefLine2, &#x27;&#x27; as RefLine3,&#xd;&#xa;&#x27;&#x27; as Description2,&#xd;&#xa;&#x27;&#x27; as InternalOrder,&#xd;&#xa;nstdamas_project.prj_id as WBS,&#xd;&#xa;	CASE&#xd;&#xa;	WHEN nstdamas_project.prj_id IS NULL THEN &#x27;false&#x27;&#xd;&#xa;	END&#xd;&#xa;	as chk_prj,&#xd;&#xa;&#x27;&#x27; as PaymentMethod,&#xd;&#xa;&#x27;&#x27; as Dummy2, &#x27;&#x27; as Dummy3, &#x27;&#x27; as Dummy4, &#x27;&#x27; as Dummy5,&#xd;&#xa;&#x28;nstdamas_employee.emp_org_id&#x2a;1000&#x29; as BA,&#xd;&#xa;	CASE&#xd;&#xa;	WHEN &#x28;nstdamas_employee.emp_org_id&#x2a;1000&#x29; &#x3d; &#x27;1000&#x27; THEN &#x27;62030104&#x27;&#xd;&#xa;	ELSE &#x27;62030103&#x27;&#xd;&#xa;	END&#xd;&#xa;	as bs,&#xd;&#xa;NOW&#x28;&#x29; as successdate,&#xd;&#xa;nstda_bst_hbill.is_success_sap,&#xd;&#xa;nstdamas_costcenter.cct_id as ProfitCtr, nstdamas_costcenter.cct_id as CostCtr,&#xd;&#xa;&#x28;&#x28;nstda_bst_dbill.qty_res&#x2a;nstda_bst_stock.unitprice&#x29;&#x2a;&#x28;100-nstda_bst_hbill.discount&#x29;&#x2f;100&#x29; as Amount,&#xd;&#xa;concat&#x28;nstda_bst_stock.matno,&#x27; &#x27;,nstda_bst_stock.matdesc,&#x27; &#x27;,nstda_bst_dbill.qty_res&#x29; as Description1&#xd;&#xa;FROM nstda_bst_hbill&#xd;&#xa;left outer join nstda_bst_dbill&#xd;&#xa;ON nstda_bst_hbill.id &#x3d; nstda_bst_dbill.hbill_ids&#xd;&#xa;left outer join nstda_bst_stock&#xd;&#xa;ON nstda_bst_dbill.matno &#x3d; nstda_bst_stock.id&#xd;&#xa;left outer join nstdamas_employee&#xd;&#xa;ON nstda_bst_hbill.empid &#x3d; nstdamas_employee.id&#xd;&#xa;left outer join nstdamas_costcenter&#xd;&#xa;ON nstda_bst_hbill.costct &#x3d; nstdamas_costcenter.id&#xd;&#xa;left outer join nstdamas_project&#xd;&#xa;ON nstda_bst_hbill.prjno &#x3d; nstdamas_project.id&#xd;&#xa;where nstda_bst_hbill.status &#x3d; &#x27;success&#x27;&#xd;&#xa;and nstda_bst_hbill.is_success_sap &#x3d; False&#xd;&#xa;order by docno asc</sql>
+    <sql>SELECT&#xd;&#xa;&#x27;NS01&#x27; as Company,&#xd;&#xa;&#x27;JI&#x27; as DocType,&#xd;&#xa;TO_CHAR&#x28;nstda_bst_hbill.post_date, &#x27;YYYYMMDD&#x27;&#x29; as DocDate,&#xd;&#xa;TO_CHAR&#x28;NOW&#x28;&#x29;, &#x27;YYYYMMDD&#x27;&#x29; as PostDate,&#xd;&#xa;&#x27;THB&#x27; as Currency,&#xd;&#xa;&#x27;&#x27; as Branch,&#xd;&#xa;nstda_bst_hbill.docno as Docno,&#xd;&#xa;nstda_bst_hbill.objdesc as Objdesc,&#xd;&#xa;40 as PostKey,&#xd;&#xa;&#x27;&#x27; as SpecialGL,&#xd;&#xa;&#x27;&#x27; as BankType,&#xd;&#xa;&#x27;&#x27; as TaxCode,&#xd;&#xa;&#x27;&#x27; as BaseTaxAmount,&#xd;&#xa;&#x27;&#x27; as BaseLineDate,&#xd;&#xa;nstda_bst_hbill.docno as ZUONR,&#xd;&#xa;&#x27;&#x27; as RefLine1, &#x27;&#x27; as RefLine2, &#x27;&#x27; as RefLine3,&#xd;&#xa;&#x27;&#x27; as Description2,&#xd;&#xa;&#x27;&#x27; as InternalOrder,&#xd;&#xa;nstdamas_project.prj_id as WBS,&#xd;&#xa;	CASE&#xd;&#xa;	WHEN nstdamas_project.prj_id IS NULL THEN &#x27;false&#x27;&#xd;&#xa;	END&#xd;&#xa;	as chk_prj,&#xd;&#xa;&#x27;&#x27; as PaymentMethod,&#xd;&#xa;&#x27;&#x27; as Dummy2, &#x27;&#x27; as Dummy3, &#x27;&#x27; as Dummy4, &#x27;&#x27; as Dummy5,&#xd;&#xa;&#x28;nstdamas_employee.emp_org_id&#x2a;1000&#x29; as BA,&#xd;&#xa;	CASE&#xd;&#xa;	WHEN &#x28;nstdamas_employee.emp_org_id&#x2a;1000&#x29; &#x3d; &#x27;1000&#x27; THEN &#x27;62030104&#x27;&#xd;&#xa;	ELSE &#x27;62030103&#x27;&#xd;&#xa;	END&#xd;&#xa;	as bs,&#xd;&#xa;NOW&#x28;&#x29; as successdate,&#xd;&#xa;nstda_bst_hbill.is_success_sap,&#xd;&#xa;nstdamas_costcenter.cct_id as ProfitCtr, nstdamas_costcenter.cct_id as CostCtr,&#xd;&#xa;&#x28;&#x28;nstda_bst_dbill.qty_res&#x2a;nstda_bst_stock.unitprice&#x29;&#x2a;&#x28;100-nstda_bst_hbill.discount&#x29;&#x2f;100&#x29; as Amount,&#xd;&#xa;concat&#x28;nstda_bst_stock.matno,&#x27; &#x27;,nstda_bst_stock.matdesc,&#x27; &#x27;,nstda_bst_dbill.qty_res&#x29; as Description1&#xd;&#xa;FROM nstda_bst_hbill&#xd;&#xa;left outer join nstda_bst_dbill&#xd;&#xa;ON nstda_bst_hbill.id &#x3d; nstda_bst_dbill.hbill_ids&#xd;&#xa;left outer join nstda_bst_stock&#xd;&#xa;ON nstda_bst_dbill.matno &#x3d; nstda_bst_stock.id&#xd;&#xa;left outer join nstdamas_employee&#xd;&#xa;ON nstda_bst_hbill.empid &#x3d; nstdamas_employee.id&#xd;&#xa;left outer join nstdamas_costcenter&#xd;&#xa;ON nstda_bst_hbill.costct &#x3d; nstdamas_costcenter.id&#xd;&#xa;left outer join nstdamas_project&#xd;&#xa;ON nstda_bst_hbill.prjno &#x3d; nstdamas_project.id&#xd;&#xa;where nstda_bst_hbill.status &#x3d; &#x27;success&#x27;&#xd;&#xa;and nstda_bst_hbill.is_success_sap &#x3d; False&#xd;&#xa;and nstda_bst_dbill.qty_res &#x3e; 0&#xd;&#xa;order by docno asc</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>

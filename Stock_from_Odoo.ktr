@@ -68,7 +68,7 @@
   <created_user>-</created_user>
   <created_date>2559&#x2f;06&#x2f;23 10&#x3a;36&#x3a;16.072</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2560&#x2f;09&#x2f;28 11&#x3a;41&#x3a;48.881</modified_date>
+  <modified_date>2560&#x2f;09&#x2f;29 13&#x3a;11&#x3a;31.967</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -100,7 +100,7 @@
   </connection>
   <order>
   <hop> <from>Map field</from><to>Output except</to><enabled>N</enabled> </hop>
-  <hop> <from>Map field</from><to>Output ZKBMM001_</to><enabled>Y</enabled> </hop>
+  <hop> <from>Map field</from><to>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;</to><enabled>Y</enabled> </hop>
   <hop> <from>Set is_success_sap</from><to>U is_success_sap</to><enabled>Y</enabled> </hop>
   <hop> <from>Map field</from><to>Set is_success_sap</to><enabled>Y</enabled> </hop>
   <hop> <from>nstda_bst_dbill</from><to>Case no</to><enabled>Y</enabled> </hop>
@@ -307,7 +307,7 @@
     </step>
 
   <step>
-    <name>Output ZKBMM001_</name>
+    <name>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;</name>
     <type>TextFileOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -447,15 +447,15 @@
     <append>N</append>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <file>
-      <name>stod2sap_error_except</name>
+      <name>D&#x3a;&#x5c;data-integration&#x5c;ZKBMM001error_</name>
       <extention>xls</extention>
       <do_not_open_newfile_init>N</do_not_open_newfile_init>
       <create_parent_folder>N</create_parent_folder>
       <split>N</split>
       <add_date>N</add_date>
       <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format/>
+      <SpecifyFormat>Y</SpecifyFormat>
+      <date_time_format>yyyyMMdd</date_time_format>
       <sheetname>Sheet1</sheetname>
       <autosizecolums>N</autosizecolums>
       <nullisblank>N</nullisblank>
@@ -697,32 +697,6 @@
     </step>
 
   <step>
-    <name>nstda_bst_dbill</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>odoo</connection>
-    <sql>SELECT&#xd;&#xa;lpad&#x28;&#x28;row_number&#x28;&#x29; OVER &#x28;PARTITION BY nstda_bst_dbill.tbill_ids ORDER BY nstda_bst_dbill.id&#x29;&#x29;&#x3a;&#x3a;varchar,3,&#x27;0&#x27;&#x29; as no,&#xd;&#xa;nstda_bst_stock.matno&#x3a;&#x3a;varchar as matno,&#xd;&#xa;nstda_bst_stock.matdesc&#x3a;&#x3a;varchar as matdesc,&#xd;&#xa;nstda_bst_stock.qty&#x3a;&#x3a;varchar as qty,&#xd;&#xa;nstdamas_employee.emp_id&#x3a;&#x3a;varchar as emp_id,&#xd;&#xa;&#x27;103015&#x27; as bookstore,&#xd;&#xa;&#x27;000&#x27; as seq,&#xd;&#xa;to_char&#x28;nstda_bst_hbill.book_date,&#x27;DD.MM.YYYY&#x27;&#x29; as book_date,&#xd;&#xa;to_char&#x28;nstda_bst_hbill.post_date,&#x27;DD.MM.YYYY&#x27;&#x29; as post_date,&#xd;&#xa;nstda_bst_hbill.docno&#x3a;&#x3a;varchar as docno,&#xd;&#xa;plant&#x3a;&#x3a;varchar,&#xd;&#xa;&#x27;1011&#x27; as storage,&#xd;&#xa;nstda_bst_dbill.tbill_ids,&#xd;&#xa;nstda_bst_dbill.is_success_sap,&#xd;&#xa;nstda_bst_dbill.id&#xd;&#xa;FROM nstda_bst_hbill&#xd;&#xa;left outer join nstda_bst_dbill&#xd;&#xa;ON nstda_bst_hbill.id &#x3d; nstda_bst_dbill.tbill_ids&#xd;&#xa;left outer join nstda_bst_stock&#xd;&#xa;ON nstda_bst_dbill.matno &#x3d; nstda_bst_stock.id&#xd;&#xa;left outer join nstdamas_employee&#xd;&#xa;ON nstda_bst_hbill.empid &#x3d; nstdamas_employee.id&#xd;&#xa;left outer join nstdamas_costcenter&#xd;&#xa;ON nstda_bst_hbill.costct &#x3d; nstdamas_costcenter.id&#xd;&#xa;where nstda_bst_hbill.status &#x3d; &#x27;success&#x27;&#xd;&#xa;and nstda_bst_dbill.is_success_sap &#x3d; False&#xd;&#xa;ORDER BY nstda_bst_dbill.tbill_ids asc</sql>
-    <limit>1000</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>32</xloc>
-      <yloc>32</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>U is_success_sap</name>
     <type>InsertUpdate</type>
     <description/>
@@ -788,6 +762,32 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>256</xloc>
       <yloc>192</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>nstda_bst_dbill</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>odoo</connection>
+    <sql>SELECT&#xd;&#xa;lpad&#x28;&#x28;row_number&#x28;&#x29; OVER &#x28;PARTITION BY nstda_bst_dbill.tbill_ids ORDER BY nstda_bst_dbill.id&#x29;&#x29;&#x3a;&#x3a;varchar,3,&#x27;0&#x27;&#x29; as no,&#xd;&#xa;nstda_bst_stock.matno&#x3a;&#x3a;varchar as matno,&#xd;&#xa;nstda_bst_stock.matdesc&#x3a;&#x3a;varchar as matdesc,&#xd;&#xa;nstda_bst_stock.qty&#x3a;&#x3a;varchar as qty,&#xd;&#xa;nstdamas_employee.emp_id&#x3a;&#x3a;varchar as emp_id,&#xd;&#xa;&#x27;103015&#x27; as bookstore,&#xd;&#xa;&#x27;000&#x27; as seq,&#xd;&#xa;to_char&#x28;nstda_bst_hbill.book_date,&#x27;DD.MM.YYYY&#x27;&#x29; as book_date,&#xd;&#xa;to_char&#x28;nstda_bst_hbill.post_date,&#x27;DD.MM.YYYY&#x27;&#x29; as post_date,&#xd;&#xa;nstda_bst_hbill.docno&#x3a;&#x3a;varchar as docno,&#xd;&#xa;plant&#x3a;&#x3a;varchar,&#xd;&#xa;&#x27;1011&#x27; as storage,&#xd;&#xa;nstda_bst_dbill.tbill_ids,&#xd;&#xa;nstda_bst_dbill.is_success_sap,&#xd;&#xa;nstda_bst_dbill.id&#xd;&#xa;FROM nstda_bst_hbill&#xd;&#xa;left outer join nstda_bst_dbill&#xd;&#xa;ON nstda_bst_hbill.id &#x3d; nstda_bst_dbill.tbill_ids&#xd;&#xa;left outer join nstda_bst_stock&#xd;&#xa;ON nstda_bst_dbill.matno &#x3d; nstda_bst_stock.id&#xd;&#xa;left outer join nstdamas_employee&#xd;&#xa;ON nstda_bst_hbill.empid &#x3d; nstdamas_employee.id&#xd;&#xa;left outer join nstdamas_costcenter&#xd;&#xa;ON nstda_bst_hbill.costct &#x3d; nstdamas_costcenter.id&#xd;&#xa;where nstda_bst_hbill.status &#x3d; &#x27;success&#x27;&#xd;&#xa;and nstda_bst_dbill.is_success_sap &#x3d; False&#xd;&#xa;and nstda_bst_dbill.qty_res &#x3e; 0&#xd;&#xa;ORDER BY nstda_bst_dbill.tbill_ids asc</sql>
+    <limit>1000</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>32</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
