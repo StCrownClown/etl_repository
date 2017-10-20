@@ -68,7 +68,7 @@
   <created_user>-</created_user>
   <created_date>2017&#x2f;08&#x2f;27 18&#x3a;27&#x3a;19.484</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2017&#x2f;09&#x2f;19 13&#x3a;27&#x3a;42.723</modified_date>
+  <modified_date>2560&#x2f;10&#x2f;10 16&#x3a;05&#x3a;56.544</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -83,22 +83,6 @@
     <port>5432</port>
     <username>openerp</username>
     <password>Encrypted 2be98afc86aa7f2e4cb79ff228dc6fa8c</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>PORT_NUMBER</code><attribute>5432</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>oerpdev</name>
-    <server>10.226.202.214</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>odoo</database>
-    <port>5432</port>
-    <username>etl</username>
-    <password>Encrypted 2be98afc86aa7f2e4b820f851fcb8a2f7</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -130,59 +114,135 @@
   <hop> <from>filter wrong data</from><to>O nstda.sds.chemcasno</to><enabled>Y</enabled> </hop>
   <hop> <from>filter null</from><to>O nstda.sds.labdepartment</to><enabled>Y</enabled> </hop>
   <hop> <from>unique cas_no</from><to>I&#x2f;U sds_chemcasno</to><enabled>Y</enabled> </hop>
-  <hop> <from>I nstda.sds.googleapis</from><to>I&#x2f;U sds_googleapis</to><enabled>Y</enabled> </hop>
   </order>
   <step>
-    <name>filter wrong data</name>
-    <type>FilterRows</type>
+    <name>I msds_biotec</name>
+    <type>ExcelInput</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
-<send_true_to>sort cas_no</send_true_to>
-<send_false_to>O nstda.sds.chemcasno</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <conditions>
-  <condition>
-   <negated>N</negated>
-   <operator>AND</operator>
-   <leftvalue>cas_no</leftvalue>
-   <function>IS NOT NULL</function>
-   <rightvalue/>
-   </condition>
-  <condition>
-   <negated>N</negated>
-   <operator>AND</operator>
-   <leftvalue>cas_no</leftvalue>
-   <function>REGEXP</function>
-   <rightvalue/>
-   <value><name>constant</name><type>String</type><text>.&#x7b;0,12&#x7d;</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value>   </condition>
-  <condition>
-   <negated>N</negated>
-   <operator>AND</operator>
-   <leftvalue>cas_no</leftvalue>
-   <function>REGEXP</function>
-   <rightvalue/>
-   <value><name>constant</name><type>String</type><text>&#x28;&#x3f;&#x21;0&#x29;&#x5c;d&#x7b;2,7&#x7d;-&#x5c;d&#x7b;2&#x7d;-&#x5c;d&#x7b;1&#x7d;&#x28;&#x3f;&#x21;.&#x29;</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value>   </condition>
-  <condition>
-   <negated>Y</negated>
-   <operator>AND</operator>
-   <leftvalue>cas_no</leftvalue>
-   <function>REGEXP</function>
-   <rightvalue/>
-   <value><name>constant</name><type>String</type><text>&#x5b;&#x2f;&#x5c;&#x5c;&#x5c;&#x5c;&#x5d;</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value>   </condition>
-  </conditions>
- </condition>
-    </compare>
+    <header>Y</header>
+    <noempty>Y</noempty>
+    <stoponempty>N</stoponempty>
+    <filefield/>
+    <sheetfield/>
+    <sheetrownumfield/>
+    <rownumfield/>
+    <sheetfield/>
+    <filefield/>
+    <limit>0</limit>
+    <encoding/>
+    <add_to_result_filenames>Y</add_to_result_filenames>
+    <accept_filenames>N</accept_filenames>
+    <accept_field/>
+    <accept_stepname/>
+    <file>
+      <name>D&#x3a;&#x5c;project&#x5c;sds&#x5c;&#xe02;&#xe49;&#xe2d;&#xe21;&#xe39;&#xe25;&#xe2a;&#xe32;&#xe23;&#xe40;&#xe04;&#xe21;&#xe35;&#xe43;&#xe19;&#xe04;&#xe23;&#xe2d;&#xe1a;&#xe04;&#xe23;&#xe2d;&#xe07; 2559.xls</name>
+      <filemask/>
+      <exclude_filemask/>
+      <file_required>N</file_required>
+      <include_subfolders>N</include_subfolders>
+      <name/>
+      <filemask/>
+      <exclude_filemask/>
+      <file_required>N</file_required>
+      <include_subfolders>N</include_subfolders>
+    </file>
+    <fields>
+      <field>
+        <name>CASNo2</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+        <repeat>N</repeat>
+        <format>&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;-&#x23;&#x23;-&#x23;</format>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>&#xe0a;&#xe37;&#xe48;&#xe2d;&#xe1c;&#xe25;&#xe34;&#xe15;&#xe20;&#xe31;&#xe13;&#xe11;&#xe4c; &#x2f; &#xe0a;&#xe37;&#xe48;&#xe2d;&#xe17;&#xe32;&#xe07;&#xe01;&#xe32;&#xe23;&#xe04;&#xe49;&#xe32;&#xa;&#x28;product name&#x29;</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>&#xe0a;&#xe37;&#xe48;&#xe2d;&#xe2a;&#xe32;&#xe23;&#xe40;&#xe04;&#xe21;&#xe35;&#xe2d;&#xe31;&#xe19;&#xe15;&#xe23;&#xe32;&#xe22; &#x2f; &#xa;&#xe0a;&#xe37;&#xe48;&#xe2d;&#xe17;&#xe32;&#xe07;&#xe40;&#xe04;&#xe21;&#xe35;&#xa;&#x28;hazardous substances&#x29;</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>&#xe2b;&#xe19;&#xe48;&#xe27;&#xe22;&#xe07;&#xe32;&#xe19;&#xe23;&#xe31;&#xe1a;&#xe1c;&#xe34;&#xe14;&#xe0a;&#xe2d;&#xe1a;&#xa;&#x28;&#xe0a;&#xe37;&#xe48;&#xe2d;&#xe2b;&#xe49;&#xe2d;&#xe07;&#xe1b;&#xe0f;&#xe34;&#xe1a;&#xe31;&#xe15;&#xe34;&#xe01;&#xe32;&#xe23;&#x29;</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>&#xe2a;&#xe16;&#xe32;&#xe19;&#xe17;&#xe35;&#xe48;&#xe40;&#xe01;&#xe47;&#xe1a;&#xe23;&#xe31;&#xe01;&#xe29;&#xe32;&#xa;&#x28;&#xe2b;&#xe21;&#xe32;&#xe22;&#xe40;&#xe25;&#xe02;&#xe2b;&#xe49;&#xe2d;&#xe07;&#x29;</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+        <repeat>N</repeat>
+        <format>&#x23;</format>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+    </fields>
+    <sheets>
+      <sheet>
+        <name>&#xe19;&#xe33;&#xe40;&#xe02;&#xe49;&#xe32;&#xe02;&#xe49;&#xe2d;&#xe21;&#xe39;&#xe25;</name>
+        <startrow>0</startrow>
+        <startcol>0</startcol>
+        </sheet>
+    </sheets>
+    <strict_types>N</strict_types>
+    <error_ignored>N</error_ignored>
+    <error_line_skipped>N</error_line_skipped>
+    <bad_line_files_destination_directory/>
+    <bad_line_files_extension>warning</bad_line_files_extension>
+    <error_line_files_destination_directory/>
+    <error_line_files_extension>error</error_line_files_extension>
+    <line_number_files_destination_directory/>
+    <line_number_files_extension>line</line_number_files_extension>
+    <shortFileFieldName/>
+    <pathFieldName/>
+    <hiddenFieldName/>
+    <lastModificationTimeFieldName/>
+    <uriNameFieldName/>
+    <rootUriNameFieldName/>
+    <extensionFieldName/>
+    <sizeFieldName/>
+    <spreadsheet_type>JXL</spreadsheet_type>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>272</xloc>
+      <xloc>48</xloc>
       <yloc>16</yloc>
       <draw>Y</draw>
       </GUI>
@@ -226,8 +286,8 @@
     </step>
 
   <step>
-    <name>replace whitespace</name>
-    <type>ReplaceString</type>
+    <name>I&#x2f;U sds_chemical</name>
+    <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -236,57 +296,87 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>cas_no</in_stream_name>
-        <out_stream_name/>
-        <use_regex>yes</use_regex>
-        <replace_string>&#x5c;s&#x2b;</replace_string>
-        <replace_by_string/>
-        <set_empty_string>Y</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-    </fields>
+    <connection>localhost</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>nstda_sds_chemical</table>
+      <key>
+        <name>cas_no2</name>
+        <field>cas_no2</field>
+        <condition>&#x3d;</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>cas_no</name>
+        <field>cas_no</field>
+        <condition>&#x3d;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>cas_no2</name>
+        <rename>cas_no2</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>cas_no</name>
+        <rename>cas_no</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>160</xloc>
+      <xloc>832</xloc>
       <yloc>16</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>sort cas_no</name>
-    <type>SortRows</type>
+    <name>I&#x2f;U sds_labdepartment</name>
+    <type>InsertUpdate</type>
     <description/>
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
-      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
-      <prefix>out</prefix>
-      <sort_size>1000000</sort_size>
-      <free_memory/>
-      <compress>N</compress>
-      <compress_variable/>
-      <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>cas_no</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <presorted>N</presorted>
-      </field>
-    </fields>
+    <connection>localhost</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>nstda_sds_labdepartment</table>
+      <key>
+        <name>lab_dpm_id</name>
+        <field>lab_dpm_id</field>
+        <condition>&#x3d;</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>storage_place</name>
+        <field>storage_place</field>
+        <condition>&#x3d;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>lab_dpm_id</name>
+        <rename>lab_dpm_id</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>storage_place</name>
+        <rename>storage_place</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>384</xloc>
-      <yloc>16</yloc>
+      <xloc>608</xloc>
+      <yloc>208</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -392,363 +482,6 @@
     </step>
 
   <step>
-    <name>unique cas_no</name>
-    <type>Unique</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <count_rows>N</count_rows>
-      <count_field>dup</count_field>
-      <reject_duplicate_row>N</reject_duplicate_row>
-      <error_description>test</error_description>
-    <fields>      <field>        <name>cas_no</name>
-        <case_insensitive>N</case_insensitive>
-        </field>      </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>496</xloc>
-      <yloc>16</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>I msds_biotec</name>
-    <type>ExcelInput</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <header>Y</header>
-    <noempty>Y</noempty>
-    <stoponempty>N</stoponempty>
-    <filefield/>
-    <sheetfield/>
-    <sheetrownumfield/>
-    <rownumfield/>
-    <sheetfield/>
-    <filefield/>
-    <limit>0</limit>
-    <encoding/>
-    <add_to_result_filenames>Y</add_to_result_filenames>
-    <accept_filenames>N</accept_filenames>
-    <accept_field/>
-    <accept_stepname/>
-    <file>
-      <name>C&#x3a;&#x5c;Users&#x5c;901180&#x5c;Downloads&#x5c;sds&#x5c;&#xe02;&#xe49;&#xe2d;&#xe21;&#xe39;&#xe25;&#xe2a;&#xe32;&#xe23;&#xe40;&#xe04;&#xe21;&#xe35;&#xe43;&#xe19;&#xe04;&#xe23;&#xe2d;&#xe1a;&#xe04;&#xe23;&#xe2d;&#xe07; 2559.xls</name>
-      <filemask/>
-      <exclude_filemask/>
-      <file_required>N</file_required>
-      <include_subfolders>N</include_subfolders>
-    </file>
-    <fields>
-      <field>
-        <name>CASNo2</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-        <repeat>N</repeat>
-        <format>&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;-&#x23;&#x23;-&#x23;</format>
-        <currency/>
-        <decimal/>
-        <group/>
-      </field>
-      <field>
-        <name>&#xe0a;&#xe37;&#xe48;&#xe2d;&#xe1c;&#xe25;&#xe34;&#xe15;&#xe20;&#xe31;&#xe13;&#xe11;&#xe4c; &#x2f; &#xe0a;&#xe37;&#xe48;&#xe2d;&#xe17;&#xe32;&#xe07;&#xe01;&#xe32;&#xe23;&#xe04;&#xe49;&#xe32;&#xa;&#x28;product name&#x29;</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-        <repeat>N</repeat>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-      </field>
-      <field>
-        <name>&#xe0a;&#xe37;&#xe48;&#xe2d;&#xe2a;&#xe32;&#xe23;&#xe40;&#xe04;&#xe21;&#xe35;&#xe2d;&#xe31;&#xe19;&#xe15;&#xe23;&#xe32;&#xe22; &#x2f; &#xa;&#xe0a;&#xe37;&#xe48;&#xe2d;&#xe17;&#xe32;&#xe07;&#xe40;&#xe04;&#xe21;&#xe35;&#xa;&#x28;hazardous substances&#x29;</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-        <repeat>N</repeat>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-      </field>
-      <field>
-        <name>&#xe2b;&#xe19;&#xe48;&#xe27;&#xe22;&#xe07;&#xe32;&#xe19;&#xe23;&#xe31;&#xe1a;&#xe1c;&#xe34;&#xe14;&#xe0a;&#xe2d;&#xe1a;&#xa;&#x28;&#xe0a;&#xe37;&#xe48;&#xe2d;&#xe2b;&#xe49;&#xe2d;&#xe07;&#xe1b;&#xe0f;&#xe34;&#xe1a;&#xe31;&#xe15;&#xe34;&#xe01;&#xe32;&#xe23;&#x29;</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-        <repeat>N</repeat>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-      </field>
-      <field>
-        <name>&#xe2a;&#xe16;&#xe32;&#xe19;&#xe17;&#xe35;&#xe48;&#xe40;&#xe01;&#xe47;&#xe1a;&#xe23;&#xe31;&#xe01;&#xe29;&#xe32;&#xa;&#x28;&#xe2b;&#xe21;&#xe32;&#xe22;&#xe40;&#xe25;&#xe02;&#xe2b;&#xe49;&#xe2d;&#xe07;&#x29;</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-        <repeat>N</repeat>
-        <format>&#x23;</format>
-        <currency/>
-        <decimal/>
-        <group/>
-      </field>
-    </fields>
-    <sheets>
-      <sheet>
-        <name>&#xe19;&#xe33;&#xe40;&#xe02;&#xe49;&#xe32;&#xe02;&#xe49;&#xe2d;&#xe21;&#xe39;&#xe25;</name>
-        <startrow>0</startrow>
-        <startcol>0</startcol>
-        </sheet>
-    </sheets>
-    <strict_types>N</strict_types>
-    <error_ignored>N</error_ignored>
-    <error_line_skipped>N</error_line_skipped>
-    <bad_line_files_destination_directory/>
-    <bad_line_files_extension>warning</bad_line_files_extension>
-    <error_line_files_destination_directory/>
-    <error_line_files_extension>error</error_line_files_extension>
-    <line_number_files_destination_directory/>
-    <line_number_files_extension>line</line_number_files_extension>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
-    <spreadsheet_type>JXL</spreadsheet_type>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>48</xloc>
-      <yloc>16</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>select data</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>CASNo2</name>
-        <rename>cas_no</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>&#xe2b;&#xe19;&#xe48;&#xe27;&#xe22;&#xe07;&#xe32;&#xe19;&#xe23;&#xe31;&#xe1a;&#xe1c;&#xe34;&#xe14;&#xe0a;&#xe2d;&#xe1a;&#xa;&#x28;&#xe0a;&#xe37;&#xe48;&#xe2d;&#xe2b;&#xe49;&#xe2d;&#xe07;&#xe1b;&#xe0f;&#xe34;&#xe1a;&#xe31;&#xe15;&#xe34;&#xe01;&#xe32;&#xe23;&#x29;</name>
-        <rename>lab</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>&#xe2a;&#xe16;&#xe32;&#xe19;&#xe17;&#xe35;&#xe48;&#xe40;&#xe01;&#xe47;&#xe1a;&#xe23;&#xe31;&#xe01;&#xe29;&#xe32;&#xa;&#x28;&#xe2b;&#xe21;&#xe32;&#xe22;&#xe40;&#xe25;&#xe02;&#xe2b;&#xe49;&#xe2d;&#xe07;&#x29;</name>
-        <rename>storage_place</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>48</xloc>
-      <yloc>112</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>lookup mas_department</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>oerpdev</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>nstdamas_department</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>lab</name>
-        <field>dpm_name</field>
-        <condition>LIKE</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>id</name>
-        <rename>lab_dpm_id</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>160</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>filter null</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>sort dpm</send_true_to>
-<send_false_to>O nstda.sds.labdepartment</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <conditions>
-  <condition>
-   <negated>N</negated>
-   <operator>AND</operator>
-   <leftvalue>lab_dpm_id</leftvalue>
-   <function>IS NOT NULL</function>
-   <rightvalue/>
-   </condition>
-  <condition>
-   <negated>N</negated>
-   <operator>AND</operator>
-   <leftvalue>storage_place</leftvalue>
-   <function>IS NOT NULL</function>
-   <rightvalue/>
-   </condition>
-  </conditions>
- </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>272</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>I&#x2f;U sds_labdepartment</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>oerpdev</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema/>
-      <table>nstda_sds_labdepartment</table>
-      <key>
-        <name>lab_dpm_id</name>
-        <field>lab_dpm_id</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>storage_place</name>
-        <field>storage_place</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>lab_dpm_id</name>
-        <rename>lab_dpm_id</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>storage_place</name>
-        <rename>storage_place</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>608</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>sort dpm</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
-      <prefix>out</prefix>
-      <sort_size>1000000</sort_size>
-      <free_memory/>
-      <compress>N</compress>
-      <compress_variable/>
-      <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>lab_dpm_id</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>storage_place</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>384</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>O nstda.sds.labdepartment</name>
     <type>TextFileOutput</type>
     <description/>
@@ -849,35 +582,8 @@
     </step>
 
   <step>
-    <name>uniq dpm</name>
-    <type>Unique</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <count_rows>N</count_rows>
-      <count_field>dup</count_field>
-      <reject_duplicate_row>N</reject_duplicate_row>
-      <error_description>test</error_description>
-    <fields>      <field>        <name>lab_dpm_id</name>
-        <case_insensitive>N</case_insensitive>
-        </field>      <field>        <name>storage_place</name>
-        <case_insensitive>N</case_insensitive>
-        </field>      </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>496</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>I&#x2f;U sds_chemical</name>
-    <type>InsertUpdate</type>
+    <name>filter null</name>
+    <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -886,39 +592,131 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
+<send_true_to>sort dpm</send_true_to>
+<send_false_to>O nstda.sds.labdepartment</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <conditions>
+  <condition>
+   <negated>N</negated>
+   <operator>AND</operator>
+   <leftvalue>lab_dpm_id</leftvalue>
+   <function>IS NOT NULL</function>
+   <rightvalue/>
+   </condition>
+  <condition>
+   <negated>N</negated>
+   <operator>AND</operator>
+   <leftvalue>storage_place</leftvalue>
+   <function>IS NOT NULL</function>
+   <rightvalue/>
+   </condition>
+  </conditions>
+ </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>272</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>filter wrong data</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>sort cas_no</send_true_to>
+<send_false_to>O nstda.sds.chemcasno</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <conditions>
+  <condition>
+   <negated>N</negated>
+   <operator>AND</operator>
+   <leftvalue>cas_no</leftvalue>
+   <function>IS NOT NULL</function>
+   <rightvalue/>
+   </condition>
+  <condition>
+   <negated>N</negated>
+   <operator>AND</operator>
+   <leftvalue>cas_no</leftvalue>
+   <function>REGEXP</function>
+   <rightvalue/>
+   <value><name>constant</name><type>String</type><text>.&#x7b;0,12&#x7d;</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value>   </condition>
+  <condition>
+   <negated>N</negated>
+   <operator>AND</operator>
+   <leftvalue>cas_no</leftvalue>
+   <function>REGEXP</function>
+   <rightvalue/>
+   <value><name>constant</name><type>String</type><text>&#x28;&#x3f;&#x21;0&#x29;&#x5c;d&#x7b;2,7&#x7d;-&#x5c;d&#x7b;2&#x7d;-&#x5c;d&#x7b;1&#x7d;&#x28;&#x3f;&#x21;.&#x29;</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value>   </condition>
+  <condition>
+   <negated>Y</negated>
+   <operator>AND</operator>
+   <leftvalue>cas_no</leftvalue>
+   <function>REGEXP</function>
+   <rightvalue/>
+   <value><name>constant</name><type>String</type><text>&#x5b;&#x2f;&#x5c;&#x5c;&#x5c;&#x5c;&#x5d;</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value>   </condition>
+  </conditions>
+ </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>272</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>lookup mas_department</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
     <connection>localhost</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
     <lookup>
       <schema/>
-      <table>nstda_sds_chemical</table>
+      <table>nstdamas_department</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
       <key>
-        <name>cas_no2</name>
-        <field>cas_no2</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>cas_no</name>
-        <field>cas_no</field>
-        <condition>&#x3d;</condition>
+        <name>lab</name>
+        <field>dpm_name</field>
+        <condition>LIKE</condition>
         <name2/>
       </key>
       <value>
-        <name>cas_no2</name>
-        <rename>cas_no2</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>cas_no</name>
-        <rename>cas_no</rename>
-        <update>Y</update>
+        <name>id</name>
+        <rename>lab_dpm_id</rename>
+        <default/>
+        <type>Integer</type>
       </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>832</xloc>
-      <yloc>16</yloc>
+      <xloc>160</xloc>
+      <yloc>208</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -966,8 +764,8 @@
     </step>
 
   <step>
-    <name>I nstda.sds.googleapis</name>
-    <type>CsvInput</type>
+    <name>replace whitespace</name>
+    <type>ReplaceString</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -976,84 +774,181 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <filename>D&#x3a;&#x5c;Workspace&#x5c;odoo8&#x5c;custom&#x5c;app&#x5c;nstda_sds&#x5c;data&#x5c;nstda.sds.googleapis.csv</filename>
-    <filename_field/>
-    <rownum_field/>
-    <include_filename>N</include_filename>
-    <separator>,</separator>
-    <enclosure>&#x22;</enclosure>
-    <header>Y</header>
-    <buffer_size>50000</buffer_size>
-    <lazy_conversion>Y</lazy_conversion>
-    <add_filename_result>N</add_filename_result>
-    <parallel>N</parallel>
-    <newline_possible>N</newline_possible>
-    <encoding/>
     <fields>
       <field>
-        <name>id</name>
-        <type>String</type>
-        <format/>
-        <currency>&#xa3;</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>33</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>google_api_key</name>
-        <type>String</type>
-        <format/>
-        <currency>&#xa3;</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>80</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <in_stream_name>cas_no</in_stream_name>
+        <out_stream_name/>
+        <use_regex>yes</use_regex>
+        <replace_string>&#x5c;s&#x2b;</replace_string>
+        <replace_by_string/>
+        <set_empty_string>Y</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
       </field>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>48</xloc>
-      <yloc>304</yloc>
+      <xloc>160</xloc>
+      <yloc>16</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>I&#x2f;U sds_googleapis</name>
-    <type>InsertUpdate</type>
+    <name>select data</name>
+    <type>SelectValues</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>oerpdev</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema/>
-      <table>nstda_sds_googleapis</table>
-      <key>
-        <name>google_api_key</name>
-        <field>google_api_key</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>google_api_key</name>
-        <rename>google_api_key</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
+    <fields>      <field>        <name>CASNo2</name>
+        <rename>cas_no</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>&#xe2b;&#xe19;&#xe48;&#xe27;&#xe22;&#xe07;&#xe32;&#xe19;&#xe23;&#xe31;&#xe1a;&#xe1c;&#xe34;&#xe14;&#xe0a;&#xe2d;&#xe1a;&#xa;&#x28;&#xe0a;&#xe37;&#xe48;&#xe2d;&#xe2b;&#xe49;&#xe2d;&#xe07;&#xe1b;&#xe0f;&#xe34;&#xe1a;&#xe31;&#xe15;&#xe34;&#xe01;&#xe32;&#xe23;&#x29;</name>
+        <rename>lab</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>&#xe2a;&#xe16;&#xe32;&#xe19;&#xe17;&#xe35;&#xe48;&#xe40;&#xe01;&#xe47;&#xe1a;&#xe23;&#xe31;&#xe01;&#xe29;&#xe32;&#xa;&#x28;&#xe2b;&#xe21;&#xe32;&#xe22;&#xe40;&#xe25;&#xe02;&#xe2b;&#xe49;&#xe2d;&#xe07;&#x29;</name>
+        <rename>storage_place</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>48</xloc>
+      <yloc>112</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>sort cas_no</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>out</prefix>
+      <sort_size>1000000</sort_size>
+      <free_memory/>
+      <compress>N</compress>
+      <compress_variable/>
+      <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>cas_no</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <presorted>N</presorted>
+      </field>
+    </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>160</xloc>
-      <yloc>304</yloc>
+      <xloc>384</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>sort dpm</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>out</prefix>
+      <sort_size>1000000</sort_size>
+      <free_memory/>
+      <compress>N</compress>
+      <compress_variable/>
+      <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>lab_dpm_id</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>storage_place</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>384</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>uniq dpm</name>
+    <type>Unique</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <count_rows>N</count_rows>
+      <count_field>dup</count_field>
+      <reject_duplicate_row>N</reject_duplicate_row>
+      <error_description>test</error_description>
+    <fields>      <field>        <name>lab_dpm_id</name>
+        <case_insensitive>N</case_insensitive>
+        </field>      <field>        <name>storage_place</name>
+        <case_insensitive>N</case_insensitive>
+        </field>      </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>496</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>unique cas_no</name>
+    <type>Unique</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <count_rows>N</count_rows>
+      <count_field>dup</count_field>
+      <reject_duplicate_row>N</reject_duplicate_row>
+      <error_description>test</error_description>
+    <fields>      <field>        <name>cas_no</name>
+        <case_insensitive>N</case_insensitive>
+        </field>      </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>496</xloc>
+      <yloc>16</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
