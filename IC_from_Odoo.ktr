@@ -68,7 +68,7 @@
   <created_user>-</created_user>
   <created_date>2559&#x2f;06&#x2f;23 10&#x3a;36&#x3a;16.072</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2560&#x2f;09&#x2f;29 13&#x3a;11&#x3a;26.899</modified_date>
+  <modified_date>2560&#x2f;10&#x2f;27 15&#x3a;12&#x3a;40.669</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -76,6 +76,30 @@
   </notepads>
   <connection>
     <name>odoo</name>
+    <server>10.226.202.214</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>odoo</database>
+    <port>5432</port>
+    <username>etl</username>
+    <password>Encrypted 2be98afc86aa7f2e4b820f851fcb8a2f7</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>5432</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>Y</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>oerpdev</name>
     <server>10.226.202.214</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
@@ -107,11 +131,10 @@
   <hop> <from>changing sequence</from><to>Int2string</to><enabled>Y</enabled> </hop>
   <hop> <from>Concat AC</from><to>map AC RM cct</to><enabled>Y</enabled> </hop>
   <hop> <from>map AC RM cct</from><to>Map field2SAP</to><enabled>Y</enabled> </hop>
-  <hop> <from>Map field2SAP</from><to>Excel Output Except</to><enabled>N</enabled> </hop>
   <hop> <from>nstda_bst</from><to>Clone row</to><enabled>Y</enabled> </hop>
   <hop> <from>Map field2SAP</from><to>Set field value to a constant</to><enabled>Y</enabled> </hop>
   <hop> <from>Set field value to a constant</from><to>Update successdate</to><enabled>Y</enabled> </hop>
-  <hop> <from>Map field2SAP</from><to>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;</to><enabled>Y</enabled> </hop>
+  <hop> <from>Map field2SAP</from><to>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;EHI</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Clone row</name>
@@ -297,233 +320,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>480</xloc>
       <yloc>192</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Excel Output Except</name>
-    <type>ExcelOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <header>Y</header>
-    <footer>N</footer>
-    <encoding/>
-    <append>N</append>
-    <add_to_result_filenames>Y</add_to_result_filenames>
-    <file>
-      <name>D&#x3a;&#x5c;data-integration&#x5c;EHI_error</name>
-      <extention>xls</extention>
-      <do_not_open_newfile_init>N</do_not_open_newfile_init>
-      <create_parent_folder>N</create_parent_folder>
-      <split>N</split>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>Y</SpecifyFormat>
-      <date_time_format>yyyyMMdd</date_time_format>
-      <sheetname>Sheet1</sheetname>
-      <autosizecolums>N</autosizecolums>
-      <nullisblank>N</nullisblank>
-      <protect_sheet>N</protect_sheet>
-      <password>Encrypted </password>
-      <splitevery>0</splitevery>
-      <usetempfiles>N</usetempfiles>
-      <tempdirectory/>
-      </file>
-    <template>
-      <enabled>N</enabled>
-      <append>N</append>
-      <filename>template.xls</filename>
-    </template>
-    <fields>
-      <field>
-        <name>company</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>doctype</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>docdate</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>postdate</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>currency</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>branch</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>docno</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>objdesc</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>specialgl</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>banktype</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>taxcode</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>basetaxamount</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>baselinedate</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>zuonr</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>refline1</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>refline2</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>refline3</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>description2</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>internalorder</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>paymentmethod</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>dummy2</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>dummy3</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>dummy4</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>dummy5</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>profitctr</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>costctr</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>amount</name>
-        <type>Number</type>
-        <format/>
-      </field>
-      <field>
-        <name>description1</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>res_lineno</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>res_postkey</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>res_ba</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>res_ac</name>
-        <type>String</type>
-        <format/>
-      </field>
-    </fields>
-    <custom>
-    <header_font_name>arial</header_font_name>
-    <header_font_size>10</header_font_size>
-    <header_font_bold>N</header_font_bold>
-    <header_font_italic>N</header_font_italic>
-    <header_font_underline>no</header_font_underline>
-    <header_font_orientation>horizontal</header_font_orientation>
-    <header_font_color>black</header_font_color>
-    <header_background_color>none</header_background_color>
-    <header_row_height>255</header_row_height>
-    <header_alignment>left</header_alignment>
-    <header_image/>
-    <row_font_name>arial</row_font_name>
-    <row_font_size>10</row_font_size>
-    <row_font_color>black</row_font_color>
-    <row_background_color>none</row_background_color>
-      </custom>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>928</xloc>
-      <yloc>272</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -1259,7 +1055,44 @@
     </step>
 
   <step>
-    <name>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;</name>
+    <name>Update successdate</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>odoo</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>nstda_bst_hbill</table>
+      <key>
+        <name>XBLNR</name>
+        <field>docno</field>
+        <condition>&#x3d;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>is_success_sap</name>
+        <rename>is_success_sap</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>816</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;EHI</name>
     <type>TextFileOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1707,43 +1540,6 @@
     </step>
 
   <step>
-    <name>Update successdate</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>odoo</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema/>
-      <table>nstda_bst_hbill</table>
-      <key>
-        <name>XBLNR</name>
-        <field>docno</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>is_success_sap</name>
-        <rename>is_success_sap</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>816</xloc>
-      <yloc>352</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>changing sequence</name>
     <type>FieldsChangeSequence</type>
     <description/>
@@ -1879,8 +1675,8 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>odoo</connection>
-    <sql>SELECT&#xd;&#xa;&#x27;NS01&#x27; as Company,&#xd;&#xa;&#x27;JI&#x27; as DocType,&#xd;&#xa;TO_CHAR&#x28;nstda_bst_hbill.post_date, &#x27;YYYYMMDD&#x27;&#x29; as DocDate,&#xd;&#xa;TO_CHAR&#x28;NOW&#x28;&#x29;, &#x27;YYYYMMDD&#x27;&#x29; as PostDate,&#xd;&#xa;&#x27;THB&#x27; as Currency,&#xd;&#xa;&#x27;&#x27; as Branch,&#xd;&#xa;nstda_bst_hbill.docno as Docno,&#xd;&#xa;nstda_bst_hbill.objdesc as Objdesc,&#xd;&#xa;40 as PostKey,&#xd;&#xa;&#x27;&#x27; as SpecialGL,&#xd;&#xa;&#x27;&#x27; as BankType,&#xd;&#xa;&#x27;&#x27; as TaxCode,&#xd;&#xa;&#x27;&#x27; as BaseTaxAmount,&#xd;&#xa;&#x27;&#x27; as BaseLineDate,&#xd;&#xa;nstda_bst_hbill.docno as ZUONR,&#xd;&#xa;&#x27;&#x27; as RefLine1, &#x27;&#x27; as RefLine2, &#x27;&#x27; as RefLine3,&#xd;&#xa;&#x27;&#x27; as Description2,&#xd;&#xa;&#x27;&#x27; as InternalOrder,&#xd;&#xa;nstdamas_project.prj_id as WBS,&#xd;&#xa;	CASE&#xd;&#xa;	WHEN nstdamas_project.prj_id IS NULL THEN &#x27;false&#x27;&#xd;&#xa;	END&#xd;&#xa;	as chk_prj,&#xd;&#xa;&#x27;&#x27; as PaymentMethod,&#xd;&#xa;&#x27;&#x27; as Dummy2, &#x27;&#x27; as Dummy3, &#x27;&#x27; as Dummy4, &#x27;&#x27; as Dummy5,&#xd;&#xa;&#x28;nstdamas_employee.emp_org_id&#x2a;1000&#x29; as BA,&#xd;&#xa;	CASE&#xd;&#xa;	WHEN &#x28;nstdamas_employee.emp_org_id&#x2a;1000&#x29; &#x3d; &#x27;1000&#x27; THEN &#x27;62030104&#x27;&#xd;&#xa;	ELSE &#x27;62030103&#x27;&#xd;&#xa;	END&#xd;&#xa;	as bs,&#xd;&#xa;NOW&#x28;&#x29; as successdate,&#xd;&#xa;nstda_bst_hbill.is_success_sap,&#xd;&#xa;nstdamas_costcenter.cct_id as ProfitCtr, nstdamas_costcenter.cct_id as CostCtr,&#xd;&#xa;&#x28;&#x28;nstda_bst_dbill.qty_res&#x2a;nstda_bst_stock.unitprice&#x29;&#x2a;&#x28;100-nstda_bst_hbill.discount&#x29;&#x2f;100&#x29; as Amount,&#xd;&#xa;concat&#x28;nstda_bst_stock.matno,&#x27; &#x27;,nstda_bst_stock.matdesc,&#x27; &#x27;,nstda_bst_dbill.qty_res&#x29; as Description1&#xd;&#xa;FROM nstda_bst_hbill&#xd;&#xa;left outer join nstda_bst_dbill&#xd;&#xa;ON nstda_bst_hbill.id &#x3d; nstda_bst_dbill.hbill_ids&#xd;&#xa;left outer join nstda_bst_stock&#xd;&#xa;ON nstda_bst_dbill.matno &#x3d; nstda_bst_stock.id&#xd;&#xa;left outer join nstdamas_employee&#xd;&#xa;ON nstda_bst_hbill.empid &#x3d; nstdamas_employee.id&#xd;&#xa;left outer join nstdamas_costcenter&#xd;&#xa;ON nstda_bst_hbill.costct &#x3d; nstdamas_costcenter.id&#xd;&#xa;left outer join nstdamas_project&#xd;&#xa;ON nstda_bst_hbill.prjno &#x3d; nstdamas_project.id&#xd;&#xa;where nstda_bst_hbill.status &#x3d; &#x27;success&#x27;&#xd;&#xa;and nstda_bst_hbill.is_success_sap &#x3d; False&#xd;&#xa;and nstda_bst_dbill.qty_res &#x3e; 0&#xd;&#xa;order by docno asc</sql>
+    <connection>oerpdev</connection>
+    <sql>SELECT&#xd;&#xa;&#x27;NS01&#x27; as Company,&#xd;&#xa;&#x27;JI&#x27; as DocType,&#xd;&#xa;TO_CHAR&#x28;nstda_bst_hbill.post_date, &#x27;YYYYMMDD&#x27;&#x29; as DocDate,&#xd;&#xa;TO_CHAR&#x28;NOW&#x28;&#x29;, &#x27;YYYYMMDD&#x27;&#x29; as PostDate,&#xd;&#xa;&#x27;THB&#x27; as Currency,&#xd;&#xa;&#x27;&#x27; as Branch,&#xd;&#xa;nstda_bst_hbill.docno as Docno,&#xd;&#xa;nstda_bst_hbill.objdesc as Objdesc,&#xd;&#xa;40 as PostKey,&#xd;&#xa;&#x27;&#x27; as SpecialGL,&#xd;&#xa;&#x27;&#x27; as BankType,&#xd;&#xa;&#x27;&#x27; as TaxCode,&#xd;&#xa;&#x27;&#x27; as BaseTaxAmount,&#xd;&#xa;&#x27;&#x27; as BaseLineDate,&#xd;&#xa;nstda_bst_hbill.docno as ZUONR,&#xd;&#xa;&#x27;&#x27; as RefLine1, &#x27;&#x27; as RefLine2, &#x27;&#x27; as RefLine3,&#xd;&#xa;&#x27;&#x27; as Description2,&#xd;&#xa;&#x27;&#x27; as InternalOrder,&#xd;&#xa;nstdamas_project.prj_id as WBS,&#xd;&#xa;	CASE&#xd;&#xa;	WHEN nstdamas_project.prj_id IS NULL THEN &#x27;false&#x27;&#xd;&#xa;	END&#xd;&#xa;	as chk_prj,&#xd;&#xa;&#x27;&#x27; as PaymentMethod,&#xd;&#xa;&#x27;&#x27; as Dummy2, &#x27;&#x27; as Dummy3, &#x27;&#x27; as Dummy4, &#x27;&#x27; as Dummy5,&#xd;&#xa;&#x28;nstdamas_employee.emp_org_id&#x2a;1000&#x29; as BA,&#xd;&#xa;	CASE&#xd;&#xa;	WHEN &#x28;nstdamas_employee.emp_org_id&#x2a;1000&#x29; &#x3d; &#x27;1000&#x27; THEN &#x27;62030104&#x27;&#xd;&#xa;	ELSE &#x27;62030103&#x27;&#xd;&#xa;	END&#xd;&#xa;	as bs,&#xd;&#xa;NOW&#x28;&#x29; as successdate,&#xd;&#xa;nstda_bst_hbill.is_success_sap,&#xd;&#xa;nstdamas_costcenter.cct_id as ProfitCtr, nstdamas_costcenter.cct_id as CostCtr,&#xd;&#xa;&#x28;&#x28;nstda_bst_dbill.qty_res&#x2a;nstda_bst_stock.unitprice&#x29;&#x2a;&#x28;100-nstda_bst_hbill.discount&#x29;&#x2f;100&#x29; as Amount,&#xd;&#xa;concat&#x28;nstda_bst_stock.matno,&#x27; &#x27;,nstda_bst_stock.matdesc,&#x27; &#x27;,nstda_bst_dbill.qty_res&#x29; as Description1&#xd;&#xa;FROM nstda_bst_hbill&#xd;&#xa;left outer join nstda_bst_dbill&#xd;&#xa;ON nstda_bst_hbill.id &#x3d; nstda_bst_dbill.tbill_ids&#xd;&#xa;left outer join nstda_bst_stock&#xd;&#xa;ON nstda_bst_dbill.matno &#x3d; nstda_bst_stock.id&#xd;&#xa;left outer join nstdamas_employee&#xd;&#xa;ON nstda_bst_hbill.empid &#x3d; nstdamas_employee.id&#xd;&#xa;left outer join nstdamas_costcenter&#xd;&#xa;ON nstda_bst_hbill.costct &#x3d; nstdamas_costcenter.id&#xd;&#xa;left outer join nstdamas_project&#xd;&#xa;ON nstda_bst_hbill.prjno &#x3d; nstdamas_project.id&#xd;&#xa;where nstda_bst_hbill.status &#x3d; &#x27;success&#x27;&#xd;&#xa;and nstda_bst_hbill.is_success_sap &#x3d; False&#xd;&#xa;and nstda_bst_dbill.qty_res &#x3e; 0&#xd;&#xa;order by docno asc</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1897,7 +1693,7 @@
   <step_error_handling>
       <error>
         <source_step>Map field2SAP</source_step>
-        <target_step>Excel Output Except</target_step>
+        <target_step/>
         <is_enabled>Y</is_enabled>
         <nr_valuename/>
         <descriptions_valuename/>

@@ -68,7 +68,7 @@
   <created_user>-</created_user>
   <created_date>2559&#x2f;06&#x2f;23 10&#x3a;36&#x3a;16.072</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2560&#x2f;10&#x2f;18 11&#x3a;09&#x3a;12.367</modified_date>
+  <modified_date>2560&#x2f;10&#x2f;27 19&#x3a;37&#x3a;25.730</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -98,11 +98,34 @@
       <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
     </attributes>
   </connection>
+  <connection>
+    <name>oerpdev</name>
+    <server>10.226.202.214</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>odoo</database>
+    <port>5432</port>
+    <username>etl</username>
+    <password>Encrypted 2be98afc86aa7f2e4b820f851fcb8a2f7</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>5432</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>Y</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
   <order>
-  <hop> <from>Map field</from><to>Output except</to><enabled>N</enabled> </hop>
-  <hop> <from>Map field</from><to>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;</to><enabled>Y</enabled> </hop>
-  <hop> <from>Set is_success_sap</from><to>U is_success_sap</to><enabled>N</enabled> </hop>
-  <hop> <from>Map field</from><to>Set is_success_sap</to><enabled>N</enabled> </hop>
+  <hop> <from>Map field</from><to>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;ZKBMM001_</to><enabled>Y</enabled> </hop>
+  <hop> <from>Set is_success_sap</from><to>U is_success_sap</to><enabled>Y</enabled> </hop>
+  <hop> <from>Map field</from><to>Set is_success_sap</to><enabled>Y</enabled> </hop>
   <hop> <from>nstda_bst_dbill</from><to>Case no</to><enabled>Y</enabled> </hop>
   <hop> <from>Case no</from><to>Clone 001</to><enabled>Y</enabled> </hop>
   <hop> <from>Set 000</from><to>Remove clone</to><enabled>Y</enabled> </hop>
@@ -302,138 +325,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>480</xloc>
       <yloc>32</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Output except</name>
-    <type>ExcelOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <header>Y</header>
-    <footer>N</footer>
-    <encoding/>
-    <append>N</append>
-    <add_to_result_filenames>Y</add_to_result_filenames>
-    <file>
-      <name>D&#x3a;&#x5c;data-integration&#x5c;ZKBMM001error_</name>
-      <extention>xls</extention>
-      <do_not_open_newfile_init>N</do_not_open_newfile_init>
-      <create_parent_folder>N</create_parent_folder>
-      <split>N</split>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>Y</SpecifyFormat>
-      <date_time_format>yyyyMMdd</date_time_format>
-      <sheetname>Sheet1</sheetname>
-      <autosizecolums>N</autosizecolums>
-      <nullisblank>N</nullisblank>
-      <protect_sheet>N</protect_sheet>
-      <password>Encrypted </password>
-      <splitevery>0</splitevery>
-      <usetempfiles>N</usetempfiles>
-      <tempdirectory/>
-      </file>
-    <template>
-      <enabled>N</enabled>
-      <append>N</append>
-      <filename>template.xls</filename>
-    </template>
-    <fields>
-      <field>
-        <name>no</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>matno</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>matdesc</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>qty</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>emp_id</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>bookstore</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>seq</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>book_date</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>post_date</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>docno</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>plant</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>storage</name>
-        <type>String</type>
-        <format/>
-      </field>
-      <field>
-        <name>tbill_ids</name>
-        <type>String</type>
-        <format/>
-      </field>
-    </fields>
-    <custom>
-    <header_font_name>arial</header_font_name>
-    <header_font_size>10</header_font_size>
-    <header_font_bold>N</header_font_bold>
-    <header_font_italic>N</header_font_italic>
-    <header_font_underline>no</header_font_underline>
-    <header_font_orientation>horizontal</header_font_orientation>
-    <header_font_color>black</header_font_color>
-    <header_background_color>none</header_background_color>
-    <header_row_height>255</header_row_height>
-    <header_alignment>left</header_alignment>
-    <header_image/>
-    <row_font_name>arial</row_font_name>
-    <row_font_size>10</row_font_size>
-    <row_font_color>black</row_font_color>
-    <row_background_color>none</row_background_color>
-      </custom>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>592</xloc>
-      <yloc>112</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -643,7 +534,7 @@
     </step>
 
   <step>
-    <name>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;</name>
+    <name>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;ZKBMM001_</name>
     <type>TextFileOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -661,7 +552,7 @@
     <footer>N</footer>
     <format>DOS</format>
     <compression>None</compression>
-    <encoding/>
+    <encoding>TIS-620</encoding>
     <endedLine/>
     <fileNameInField>N</fileNameInField>
     <fileNameField/>
@@ -777,8 +668,8 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>odoo</connection>
-    <sql>SELECT&#xd;&#xa;lpad&#x28;&#x28;row_number&#x28;&#x29; OVER &#x28;PARTITION BY nstda_bst_dbill.tbill_ids ORDER BY nstda_bst_dbill.id&#x29;&#x29;&#x3a;&#x3a;varchar,3,&#x27;0&#x27;&#x29; as no,&#xd;&#xa;nstda_bst_stock.matno&#x3a;&#x3a;varchar as matno,&#xd;&#xa;nstda_bst_stock.matdesc&#x3a;&#x3a;varchar as matdesc,&#xd;&#xa;nstda_bst_stock.qty&#x3a;&#x3a;varchar as qty,&#xd;&#xa;nstdamas_employee.emp_id&#x3a;&#x3a;varchar as emp_id,&#xd;&#xa;&#x27;103015&#x27; as bookstore,&#xd;&#xa;&#x27;000&#x27; as seq,&#xd;&#xa;to_char&#x28;nstda_bst_hbill.book_date,&#x27;DD.MM.YYYY&#x27;&#x29; as book_date,&#xd;&#xa;to_char&#x28;nstda_bst_hbill.post_date,&#x27;DD.MM.YYYY&#x27;&#x29; as post_date,&#xd;&#xa;nstda_bst_hbill.docno&#x3a;&#x3a;varchar as docno,&#xd;&#xa;plant&#x3a;&#x3a;varchar,&#xd;&#xa;&#x27;1011&#x27; as storage,&#xd;&#xa;nstda_bst_dbill.tbill_ids,&#xd;&#xa;nstda_bst_dbill.is_success_sap,&#xd;&#xa;nstda_bst_dbill.id&#xd;&#xa;FROM nstda_bst_hbill&#xd;&#xa;left outer join nstda_bst_dbill&#xd;&#xa;ON nstda_bst_hbill.id &#x3d; nstda_bst_dbill.tbill_ids&#xd;&#xa;left outer join nstda_bst_stock&#xd;&#xa;ON nstda_bst_dbill.matno &#x3d; nstda_bst_stock.id&#xd;&#xa;left outer join nstdamas_employee&#xd;&#xa;ON nstda_bst_hbill.empid &#x3d; nstdamas_employee.id&#xd;&#xa;left outer join nstdamas_costcenter&#xd;&#xa;ON nstda_bst_hbill.costct &#x3d; nstdamas_costcenter.id&#xd;&#xa;where nstda_bst_hbill.status &#x3d; &#x27;success&#x27;&#xd;&#xa;and nstda_bst_dbill.is_success_sap &#x3d; False&#xd;&#xa;and nstda_bst_dbill.qty_res &#x3e; 0&#xd;&#xa;ORDER BY nstda_bst_dbill.tbill_ids asc</sql>
+    <connection>oerpdev</connection>
+    <sql>SELECT&#xd;&#xa;lpad&#x28;&#x28;row_number&#x28;&#x29; OVER &#x28;PARTITION BY nstda_bst_dbill.tbill_ids ORDER BY nstda_bst_dbill.id&#x29;&#x29;&#x3a;&#x3a;varchar,3,&#x27;0&#x27;&#x29; as no,&#xd;&#xa;nstda_bst_stock.matno&#x3a;&#x3a;varchar as matno,&#xd;&#xa;nstda_bst_stock.matdesc&#x3a;&#x3a;varchar as matdesc,&#xd;&#xa;nstda_bst_dbill.qty_res&#x3a;&#x3a;varchar as qty,&#xd;&#xa;nstdamas_employee.emp_id&#x3a;&#x3a;varchar as emp_id,&#xd;&#xa;&#x27;103015&#x27; as bookstore,&#xd;&#xa;&#x27;000&#x27; as seq,&#xd;&#xa;to_char&#x28;nstda_bst_hbill.book_date,&#x27;DD.MM.YYYY&#x27;&#x29; as book_date,&#xd;&#xa;to_char&#x28;nstda_bst_hbill.post_date,&#x27;DD.MM.YYYY&#x27;&#x29; as post_date,&#xd;&#xa;nstda_bst_hbill.docno&#x3a;&#x3a;varchar as docno,&#xd;&#xa;plant&#x3a;&#x3a;varchar,&#xd;&#xa;&#x27;1011&#x27; as storage,&#xd;&#xa;nstda_bst_dbill.tbill_ids,&#xd;&#xa;nstda_bst_dbill.is_success_sap,&#xd;&#xa;nstda_bst_dbill.id&#xd;&#xa;FROM nstda_bst_hbill&#xd;&#xa;left outer join nstda_bst_dbill&#xd;&#xa;ON nstda_bst_hbill.id &#x3d; nstda_bst_dbill.tbill_ids&#xd;&#xa;left outer join nstda_bst_stock&#xd;&#xa;ON nstda_bst_dbill.matno &#x3d; nstda_bst_stock.id&#xd;&#xa;left outer join nstdamas_employee&#xd;&#xa;ON nstda_bst_hbill.empid &#x3d; nstdamas_employee.id&#xd;&#xa;left outer join nstdamas_costcenter&#xd;&#xa;ON nstda_bst_hbill.costct &#x3d; nstdamas_costcenter.id&#xd;&#xa;where nstda_bst_hbill.status &#x3d; &#x27;success&#x27;&#xd;&#xa;and nstda_bst_dbill.is_success_sap &#x3d; False&#xd;&#xa;and nstda_bst_dbill.qty_res &#x3e; 0&#xd;&#xa;ORDER BY nstda_bst_dbill.tbill_ids asc</sql>
     <limit>1000</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -795,7 +686,7 @@
   <step_error_handling>
       <error>
         <source_step>Map field</source_step>
-        <target_step>Output except</target_step>
+        <target_step/>
         <is_enabled>Y</is_enabled>
         <nr_valuename/>
         <descriptions_valuename/>
