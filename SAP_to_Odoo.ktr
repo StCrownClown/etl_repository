@@ -68,7 +68,7 @@
   <created_user>-</created_user>
   <created_date>2560&#x2f;10&#x2f;20 16&#x3a;42&#x3a;24.739</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2560&#x2f;10&#x2f;20 19&#x3a;21&#x3a;30.158</modified_date>
+  <modified_date>2560&#x2f;10&#x2f;30 17&#x3a;06&#x3a;15.370</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -99,14 +99,100 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Text i EHI_output</from><to>U icno</to><enabled>Y</enabled> </hop>
-  <hop> <from>Text i ZKBMM_output</from><to>U docno</to><enabled>Y</enabled> </hop>
   <hop> <from>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;</from><to>Text i EHI_output</to><enabled>Y</enabled> </hop>
+  <hop> <from>Text i EHI_output</from><to>Concat icno_intf</to><enabled>Y</enabled> </hop>
   <hop> <from>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;</from><to>Text i ZKBMM_output</to><enabled>Y</enabled> </hop>
+  <hop> <from>Text i ZKBMM_output</from><to>Multiway Merge Join</to><enabled>Y</enabled> </hop>
+  <hop> <from>Text i EHI_output</from><to>Multiway Merge Join</to><enabled>Y</enabled> </hop>
+  <hop> <from>Multiway Merge Join</from><to>Concat docno_intf</to><enabled>Y</enabled> </hop>
+  <hop> <from>Concat docno_intf</from><to>Filter rows</to><enabled>Y</enabled> </hop>
+  <hop> <from>Filter rows</from><to>U docno</to><enabled>Y</enabled> </hop>
+  <hop> <from>Concat icno_intf</from><to>U icno</to><enabled>Y</enabled> </hop>
   </order>
   <step>
-    <name>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;</name>
-    <type>TableInput</type>
+    <name>Concat docno_intf</name>
+    <type>ConcatFields</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <separator>-</separator>
+    <enclosure/>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>N</header>
+    <footer>N</footer>
+    <format>DOS</format>
+    <compression>None</compression>
+    <encoding/>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>file</name>
+      <is_command>N</is_command>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>Y</do_not_open_new_file_init>
+      <extention>txt</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>year</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>docno_intf</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+    <ConcatFields>
+<targetFieldName>docno_intf</targetFieldName>
+<targetFieldLength>0</targetFieldLength>
+<removeSelectedFields>N</removeSelectedFields>
+    </ConcatFields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>368</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Concat icno_intf</name>
+    <type>ConcatFields</type>
     <description/>
     <distribute>N</distribute>
     <custom_distribution/>
@@ -115,16 +201,71 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>oerpdev</connection>
-    <sql>select&#xd;&#xa;concat&#x28;&#x27;EHI&#x27;,TO_CHAR&#x28;NOW&#x28;&#x29;, &#x27;YYYYMMDD&#x27;&#x29;,&#x27;_output.txt&#x27;&#x29; as EHI,&#xd;&#xa;concat&#x28;&#x27;ZKBMM001_&#x27;,TO_CHAR&#x28;NOW&#x28;&#x29;, &#x27;YYYYMMDD&#x27;&#x29;,&#x27;_output.txt&#x27;&#x29; as ZKBMM&#xd;&#xa;from nstda_bst_bosslevel LIMIT 1</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
+    <separator>-</separator>
+    <enclosure/>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>N</header>
+    <footer>N</footer>
+    <format>DOS</format>
+    <compression>None</compression>
+    <encoding/>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>file</name>
+      <is_command>N</is_command>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>Y</do_not_open_new_file_init>
+      <extention>txt</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>year</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>icno_intf</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+    <ConcatFields>
+<targetFieldName>icno_intf</targetFieldName>
+<targetFieldLength>0</targetFieldLength>
+<removeSelectedFields>N</removeSelectedFields>
+    </ConcatFields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>32</xloc>
+      <xloc>256</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
       </GUI>
@@ -141,7 +282,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <accept_filenames>Y</accept_filenames>
+    <accept_filenames>N</accept_filenames>
     <passing_through_fields>N</passing_through_fields>
     <accept_field>EHI</accept_field>
     <accept_stepname>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;</accept_stepname>
@@ -168,7 +309,7 @@
     <encoding>UTF-8</encoding>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <file>
-      <name>D&#x3a;&#x5c;data-integration&#x5c;EHI20171018_output.txt</name>
+      <name/>
       <filemask/>
       <exclude_filemask/>
       <file_required>N</file_required>
@@ -334,6 +475,43 @@
     </step>
 
   <step>
+    <name>U docno</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>oerpdev</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>nstda_bst_hbill</table>
+      <key>
+        <name>docno</name>
+        <field>docno</field>
+        <condition>&#x3d;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>docno_intf</name>
+        <rename>docno_intf</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>592</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Text i ZKBMM_output</name>
     <type>TextFileInput</type>
     <description/>
@@ -371,7 +549,7 @@
     <encoding>UTF-8</encoding>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <file>
-      <name>D&#x3a;&#x5c;data-integration&#x5c;ZKBMM001_20171018_output.txt</name>
+      <name/>
       <filemask/>
       <exclude_filemask/>
       <file_required>N</file_required>
@@ -462,43 +640,6 @@
     </step>
 
   <step>
-    <name>U docno</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>oerpdev</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema/>
-      <table>nstda_bst_hbill</table>
-      <key>
-        <name>docno</name>
-        <field>docno</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>docno_intf</name>
-        <rename>docno_intf</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>256</xloc>
-      <yloc>128</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>U icno</name>
     <type>InsertUpdate</type>
     <description/>
@@ -524,23 +665,114 @@
       <value>
         <name>icno_intf</name>
         <rename>icno_intf</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>fiscalyear_docno_intf</name>
-        <rename>year</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>fiscalyear_icno_intf</name>
-        <rename>year</rename>
-        <update>Y</update>
+        <update>N</update>
       </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>256</xloc>
+      <xloc>368</xloc>
       <yloc>32</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>&#x5c;&#x5c;10.226.1.37&#x5c;pabi_web&#x24;&#x5c;</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>oerpdev</connection>
+    <sql>select&#xd;&#xa;concat&#x28;&#x27;EHI&#x27;,TO_CHAR&#x28;NOW&#x28;&#x29;, &#x27;YYYYMMDD&#x27;&#x29;,&#x27;_output.txt&#x27;&#x29; as EHI,&#xd;&#xa;concat&#x28;&#x27;ZKBMM001_&#x27;,TO_CHAR&#x28;NOW&#x28;&#x29;, &#x27;YYYYMMDD&#x27;&#x29;,&#x27;_output.txt&#x27;&#x29; as ZKBMM&#xd;&#xa;from nstda_bst_bosslevel LIMIT 1</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>32</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Multiway Merge Join</name>
+    <type>MultiwayMergeJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <join_type>FULL OUTER</join_type>
+    <step0>Text i ZKBMM_output</step0>
+    <step1>Text i EHI_output</step1>
+    <number_input>2</number_input>
+    <keys>
+      <key>docno</key>
+      <key>docno</key>
+    </keys>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>256</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>U docno</send_true_to>
+<send_false_to/>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <conditions>
+  <condition>
+   <negated>N</negated>
+   <leftvalue>docno</leftvalue>
+   <function>IS NOT NULL</function>
+   <rightvalue/>
+   </condition>
+  <condition>
+   <negated>N</negated>
+   <operator>AND</operator>
+   <leftvalue>docno_intf</leftvalue>
+   <function>IS NOT NULL</function>
+   <rightvalue/>
+   </condition>
+  <condition>
+   <negated>N</negated>
+   <operator>AND</operator>
+   <leftvalue>year</leftvalue>
+   <function>IS NOT NULL</function>
+   <rightvalue/>
+   </condition>
+  </conditions>
+ </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>480</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
